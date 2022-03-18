@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_locations', function (Blueprint $table) {
-            $table->id();
-            $table->float('latitude');
-            $table->float('longitude');
+        Schema::create('reviews', function (Blueprint $table) {
+            $table->foreignId('product_id')->constrained();
             $table->foreignId('user_id')->constrained();
+            $table->primary(['user_id','product_id']);
+            $table->enum('rate',['1','2','3','4','5']);
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_locations');
+        Schema::dropIfExists('reviews');
     }
 };

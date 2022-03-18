@@ -15,13 +15,12 @@ return new class extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
-            $table->string('title',20);
-            $table->string('details',255);
-            $table->integer('discount');
-            $table->integer('count');
-            $table->string('discount_type',20);
-            $table->date('start_date');
-            $table->date('end_date');   
+            $table->string('title');
+            $table->text('description');
+            $table->tinyInteger('max_discount');
+            $table->tinyInteger('status')->default(1)->comment("1=>active ,0=> not active ");
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('end_date')->nullable();
             $table->timestamps();
         });
     }

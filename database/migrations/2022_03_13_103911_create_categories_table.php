@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name',20);
             $table->string('logo',255)->nullable();
-            $table->tinyInteger('status')->default(0);
-            $table->foreignId('category_id')->constrained();
+            $table->tinyInteger('status')->default(1)->comment("1=>active ,0=> not active ");
+            // $table->foreignId('category_id')->constrained();
             $table->timestamps();
         });
     }

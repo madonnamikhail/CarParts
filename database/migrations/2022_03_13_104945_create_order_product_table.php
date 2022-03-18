@@ -14,12 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_product', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('product_id')->constrained();
             $table->foreignId('order_id')->constrained();
-            $table->integer('quantity');
-            $table->integer('price');
-            $table->tinyInteger('status')->default(0);
+            $table->foreignId('product_id')->constrained();
+            $table->primary(['order_id','product_id']);
+            $table->decimal('price');
+            $table->tinyInteger('quantity');
+            $table->tinyInteger('discount')->nullable();
+            $table->tinyInteger('status')->default(1)->comment("1=>pending ,2=>shiped");
             $table->timestamps();
         });
     }

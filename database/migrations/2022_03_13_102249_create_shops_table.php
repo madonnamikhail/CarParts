@@ -18,9 +18,10 @@ return new class extends Migration
             $table->string('street',255);
             $table->string('building',255);
             $table->string('floor',255);
-            $table->string('shop_name_number',255);
-            $table->string('note')->nullable();
+            $table->string('name',255);
+            $table->text('note')->nullable();
             $table->foreignId('seller_id')->constrained();
+            $table->foreignId('region_id')->constrained();
             $table->timestamps();
         });
     }

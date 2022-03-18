@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained();
             $table->foreignId('offer_id')->constrained();
+            $table->decimal('price_after_discount');
             $table->timestamps();
         });
     }

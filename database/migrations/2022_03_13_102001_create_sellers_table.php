@@ -15,14 +15,16 @@ return new class extends Migration
     {
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
+            $table->string('name',32);
+            $table->string('email',32)->unique();
             $table->string('password');
-            $table->string('name');
-            $table->string('phone')->unique();
-            $table->string('national_id')->unique();
+            $table->string('phone',11)->unique();
+            $table->bigInteger('national_id')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->tinyInteger('status')->default(0);
-            $table->string('socialLinks');
+            $table->tinyInteger('status')->default(1)->comment("1=>active ,0=> not active ");
+            $table->enum('gender',['f','m']);
+            // $table->string('image')->default("seller.jpg");
+            $table->string('socialLinks')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('models', function (Blueprint $table) {
             $table->id();
             $table->string('name',20);
-            $table->date('date');
-            $table->tinyInteger('status')->default(0);
+            $table->year('year');
+            $table->tinyInteger('status')->default(1)->comment("1=>active ,0=> not active ");
             $table->foreignId('brand_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
             $table->timestamps();
         });
