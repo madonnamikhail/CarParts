@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+//Admin Dashboard
+Route::group(['prefix'=>'admin'],function(){
+    Route::get('/',[DashboardController::class,'index']);
+});
+
+
+
+
+
+
+
+
+
+
+//User Dashboard
+Route::group([],function(){
+
 });
