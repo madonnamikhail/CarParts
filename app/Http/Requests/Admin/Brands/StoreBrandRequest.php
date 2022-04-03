@@ -27,7 +27,8 @@ class StoreBrandRequest extends FormRequest
     {
         return [
             'name'=>['required','max:32','unique:brands,name'],
-            'status'=>['required','in:'.implode(',',BrandsController::AVAILABLE_STATUS)]
+            'status'=>['required','in:'.implode(',',BrandsController::AVAILABLE_STATUS)],
+            'image'=>['required','max:1024','mimes:png,jpg:'.implode(',',BrandsController::AVAILABLE_EXTENSIONS)]
         ];
     }
 }

@@ -6,7 +6,7 @@
     </div>
     @include('includes.validation-errors')
     <div class="col-12">
-        <form method="post" action="{{ route('brands.store') }}">
+        <form method="post" action="{{ route('brands.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="name">اسم العلامة التجارية</label>
@@ -22,13 +22,13 @@
                     @endforeach
                 </select>
             </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">رفع</span>
-                </div>
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile01">
-                    <label class="custom-file-label" for="inputGroupFile01">اختر لوجو</label>
+
+            <div class="row">
+                <div class="col-3">
+                    <input type="file" name="image" class="custom-file-input d-none" id="inputGroupFile01" accept="image/*" onchange="loadFile(event)">
+                    <label for="inputGroupFile01">
+                          <img id="output" src="{{asset('default/default.jpg')}}" class="w-50 mb-1" alt="" id="output">
+                    </label>
                 </div>
             </div>
             @include('includes.create-submit-buttons')
@@ -37,3 +37,14 @@
     </div>
 
 @endsection
+@push('js')
+<script>
+    var loadFile = function(event) {
+      var output = document.getElementById('output');
+      output.src = URL.createObjectURL(event.target.files[0]);
+      output.onload = function() {
+        URL.revokeObjectURL(output.src) // free memory
+      }
+    };
+  </script>
+@endpush
