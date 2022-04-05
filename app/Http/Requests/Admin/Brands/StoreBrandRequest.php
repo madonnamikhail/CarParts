@@ -5,7 +5,6 @@ namespace App\Http\Requests\Admin\Brands;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Controllers\Admin\BrandsController;
 
-
 class StoreBrandRequest extends FormRequest
 {
     /**
@@ -28,7 +27,10 @@ class StoreBrandRequest extends FormRequest
         return [
             'name'=>['required','max:32','unique:brands,name'],
             'status'=>['required','in:'.implode(',',BrandsController::AVAILABLE_STATUS)],
-            'image'=>['required','max:1024','mimes:png,jpg:'.implode(',',BrandsController::AVAILABLE_EXTENSIONS)]
+            'image'=>['required','max:1024','mimes:png,jpg:'.implode(',',BrandsController::AVAILABLE_EXTENSIONS)],
+            'width'=>['required_with:resize'],//,'integer','between:50,1080'
+            'heigth'=>['required_with:resize'],//,'integer','between:50,1080'
+
         ];
     }
 }

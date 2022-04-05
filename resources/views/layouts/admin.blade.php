@@ -212,7 +212,7 @@
                         </div>
                         @yield('content')
                     </div>
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-12 ">
                             <footer class="bg-white p-4 w-100" style="position: fixed;bottom:0%">
                                 <div class="row">
@@ -235,7 +235,7 @@
                                 </div>
                             </footer>
                         </div>
-                    </div>
+                    </div> --}}
 
 
                 </div>

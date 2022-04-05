@@ -32,6 +32,20 @@
                     </label>
                 </div>
             </div>
+            <div class="form-group">
+                <input type="checkbox" name="resize" @checked(old('change')==='true') id="resize">
+                <label for="resize">تغيير ابعاد الصورة</label>
+                <div class="row d-none" id="resizebox">
+                    <div class="col-2">
+                        <small class="form-text text-muted">ادخل عرض الصورة المطلوب</small>
+                        <input type="number" name="width" value="{{old('width')}}">
+                    </div>
+                    <div class="col-2">
+                        <small class="form-text text-muted">ادخل طول الصورة المطلوب</small>
+                        <input type="number" name="heigth" value="{{old('heigth')}}">
+                    </div>
+                </div>
+            </div>
             <button type="submit" name="edit" class="btn btn-primary">تعديل </button>
         </form>
     </div>
@@ -47,4 +61,11 @@
         }
         };
     </script>
+@endpush
+@push('js')
+  <script>
+      $('#resize').on('change',function(){
+        $('#resizebox').toggleClass('d-none');
+      });
+  </script>
 @endpush

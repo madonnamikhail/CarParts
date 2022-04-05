@@ -33,10 +33,21 @@ class RegionsController extends Controller
         return redirectAccordingToRequest($request ,'success');
     }
 
-    public function edit(UpdateRegionRequest $request ,$id)
+    public function edit($id)
     {
         $region=Region::findOrFail($id);
-        return view('Admin.regions.edit',['region'=>$region,'statuses'=>self::AVAILABLE_STATUS]);
+        $cities=City::all();
+        return view('Admin.regions.edit',['cities'=>$cities,'region'=>$region,'statuses'=>self::AVAILABLE_STATUS]);
+    }
+    public function update(UpdateRegionRequest $request , $id)
+    {
+        Region::findOrFail($id)->update($request->all());
+        return redirect()->route('regions.index')->with('success','تمت العملية بنجاح');
+    }
+    public function destroy($id)
+    {
+        $model=Region::findOrFail($id)->delete();
+        return  redirect()->back()->with('success','تمت العملية بنجاح');
     }
 
 

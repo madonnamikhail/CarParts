@@ -26,7 +26,9 @@ class UpdateBrandRequest extends FormRequest
     {
         return [
             'name'=>['required','max:32',"unique:brands,name,{$this->id},id"],
-            'status'=>['required','in:'.implode(',',BrandsController::AVAILABLE_STATUS)]
+            'status'=>['required','in:'.implode(',',BrandsController::AVAILABLE_STATUS)],
+            'width'=>['required_with:resize'],//,'integer','between:50,1080'
+            'heigth'=>['required_with:resize'],//,'integer','between:50,1080'
 
         ];
     }

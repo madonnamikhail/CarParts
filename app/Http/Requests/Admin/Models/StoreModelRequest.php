@@ -28,7 +28,8 @@ class StoreModelRequest extends FormRequest
             'name'=>['required','max:32','unique:cities,name'],
             'year'=>['required'],
             'brand_id'=>['required','exists:brands,id'],
-            'status'=>['required','in:'.implode(',',ModelsController::AVAILABLE_STATUS)]
+            'status'=>['required','in:'.implode(',',ModelsController::AVAILABLE_STATUS)],
+            'image'=>['required','max:1024','mimes:png,jpg:'.implode(',',ModelsController::AVAILABLE_EXTENSIONS)]
         ];
     }
 }

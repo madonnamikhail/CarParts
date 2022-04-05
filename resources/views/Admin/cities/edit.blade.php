@@ -24,15 +24,6 @@
                     @endforeach
                 </select>
             </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">رفع</span>
-                </div>
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile01">
-                    <label class="custom-file-label" for="inputGroupFile01">اختر لوجو</label>
-                </div>
-            </div>
             <button type="submit" name="edit" class="btn btn-primary">تعديل </button>
             {{-- <button type="submit" name="create-return" class="btn btn-outline-primary">انشاء و رجوع  </button> --}}
 
