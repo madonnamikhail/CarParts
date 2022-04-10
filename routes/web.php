@@ -29,9 +29,9 @@ Route::group(['prefix'=>'admin'],function(){
     Route::group(['prefix'=>'brands','as'=>'brands.','controller'=>BrandsController::class],function(){
         Route::get('/','index')->name('index');
         Route::get('create','create')->name('create');
-        Route::get('{id}/edit','edit')->name('edit');
+        Route::get('{brand}/edit','edit')->name('edit');
         Route::post('store','store')->name('store');
-        Route::put('{id}/update','update')->name('update');
+        Route::put('{brand}/update','update')->name('update');
         Route::delete('{id}/destroy','destroy')->name('destroy');
     });
     //Cities

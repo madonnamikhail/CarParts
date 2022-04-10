@@ -6,13 +6,18 @@
     </div>
     @include('includes.validation-errors')
     <div class="col-12">
-        <form method="post" action="{{ route('brands.update',['id'=>$brand->id]) }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('brands.update',$brand->id) }}" enctype="multipart/form-data">
             @method('put')
             @csrf
             <div class="form-group">
-                <label for="name">اسم العلامة التجارية</label>
-                <input type="name" name="name" value={{$brand->name}} class="form-control" id="name" placeholder="ادخل اسم العلامة التجارية">
-                <small id="name" class="form-text text-muted">اسم العلامة التجارية يجب ان يكون مميز و خاص بك </small>
+                <label for="name"> اسم العلامة التجارية باللغة الانجليزية</label>
+                <input type="name" name="name[en]" value={{$brand->getTranslation('name','en')}}  class="form-control" id="name" placeholder="ادخل اسم العلامة التجارية بالانجليزي">
+                <small id="name" class="form-text text-muted">اسم العلامة التجارية بالانجليزي يجب ان يكون مميز و خاص بك </small>
+            </div>
+            <div class="form-group">
+                <label for="name"> اسم العلامة التجارية باللغة العربية</label>
+                <input type="name" name="name[ar]" value={{$brand->getTranslation('name','ar')}}  class="form-control" id="name" placeholder="ادخل اسم العلامة التجارية بالعربية">
+                <small id="name" class="form-text text-muted">اسم العلامة التجارية بالعربية يجب ان يكون مميز و خاص بك </small>
             </div>
             <div class="form-group">
                 <label for="status">حالة العلامة التجارية</label>

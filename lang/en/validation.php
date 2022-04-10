@@ -158,6 +158,10 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name.en'=>'Name In English',
+        'name.ar'=>'Name In Arabic'
+
+    ],
 
 ];

@@ -6,12 +6,15 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "codezero/laravel-unique-translation": "^3.5",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
-        "spatie/laravel-medialibrary": "^10.3"
+        "spatie/laravel-medialibrary": "^10.3",
+        "spatie/laravel-sluggable": "^3.4",
+        "spatie/laravel-translatable": "^6.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

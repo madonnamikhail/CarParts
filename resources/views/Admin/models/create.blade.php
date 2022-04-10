@@ -15,6 +15,7 @@
             </div>
             <div class="form-group">
                 <label for="year">سنة الموديل</label>
+
                 <input type="name" name="year" value="{{old('year')}}" class="form-control" id="year" placeholder="ادخل اسم الموديل ">
                 <small id="year" class="form-text text-muted">اسم الموديل يجب ان يكون مميز و خاص بك </small>
             </div>

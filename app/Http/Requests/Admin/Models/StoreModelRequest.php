@@ -26,7 +26,7 @@ class StoreModelRequest extends FormRequest
     {
         return [
             'name'=>['required','max:32','unique:cities,name'],
-            'year'=>['required'],
+            'year'=>['required','between:1970,2050'],
             'brand_id'=>['required','exists:brands,id'],
             'status'=>['required','in:'.implode(',',ModelsController::AVAILABLE_STATUS)],
             'image'=>['required','max:1024','mimes:png,jpg:'.implode(',',ModelsController::AVAILABLE_EXTENSIONS)]

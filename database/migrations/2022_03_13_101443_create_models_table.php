@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name',32);
             $table->year('year');
+            $table->string('slug'); // Field name same as your `saveSlugsTo`
             $table->tinyInteger('status')->default(1)->comment("1=>active ,0=> not active ");
             $table->foreignId('brand_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
             $table->timestamps();

@@ -9,16 +9,21 @@
         <form method="post" action="{{ route('brands.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="name">اسم العلامة التجارية</label>
-                <input type="name" name="name" value="{{old('name')}}" class="form-control" id="name" placeholder="ادخل اسم العلامة التجارية">
-                <small id="name" class="form-text text-muted">اسم العلامة التجارية يجب ان يكون مميز و خاص بك </small>
+                <label for="name"> اسم العلامة التجارية باللغة الانجليزية</label>
+                <input type="name" name="name[en]" value="{{old('name.en')}}" class="form-control" id="name" placeholder="ادخل اسم العلامة التجارية">
+                <small id="name" class="form-text text-muted">اسم العلامة التجارية الانجليزية يجب ان يكون مميز و خاص بك </small>
             </div>
             <div class="form-group">
-                <label for="status">حالة العلامة التجارية</label>
+                <label for="name"> اسم العلامة التجارية باللغة العربية</label>
+                <input type="name" name="name[ar]" value="{{old('name.ar')}}" class="form-control" id="name" placeholder="ادخل اسم العلامة التجارية">
+                <small id="name" class="form-text text-muted">اسم العلامة التجارية العربية يجب ان يكون مميز و خاص بك </small>
+            </div>
+            <div class="form-group">
+                <label for="status">حالة العلامة التجارية </label>
                 <select name="status" class="custom-select" id="status">
                     <option selected disabled>احتر حالة العلامة التجارية</option>
                     @foreach ($statuses as $status => $value)
-                        <option @selected(old('status')=== $value) value="{{ $value }}"> {{ $status }}</option>
+                        <option @selected(old('status') === $value) value="{{ $value }}"> {{ $status }}</option>
                     @endforeach
                 </select>
             </div>

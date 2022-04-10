@@ -29,6 +29,7 @@ class BrandsController extends Controller
 
     public function store(StoreBrandRequest $request)
     {
+        // return $request;
         // fileSystem
         // $path=$request->file('image')->storeAs('brands',$request->file('image')->hashName());
         // return $path;
@@ -39,15 +40,16 @@ class BrandsController extends Controller
         }
         return redirectAccordingToRequest($request, 'success');
     }
-    public function edit($id)
+    public function edit(Brand $brand)
     {
-        $brand = Brand::findOrFail($id);
+        // $brand = Brand::findOrFail($id);
         // dd($brand->getFirstMediaUrl('images'));
         return view('Admin.brands.edit', ['brand' => $brand, 'statuses' => self::AVAILABLE_STATUS]);
     }
-    public function update(UpdateBrandRequest $request, $id)
+    public function update(UpdateBrandRequest $request, Brand $brand)
     {
-        $brand = Brand::findOrFail($id);
+        // return $request;
+        // $brand = Brand::findOrFail($id);
         $brand->update($request->all());
         if ($request->hasFile('image')) {   //check if request has image or not
             $brand->getMedia('brands')[0]->delete(); //remove old image
