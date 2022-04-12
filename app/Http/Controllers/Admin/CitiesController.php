@@ -30,19 +30,19 @@ class CitiesController extends Controller
         return redirectAccordingToRequest($request ,'success');
     }
 
-    public function edit($id)
+    public function edit(City $city)
     {
-        $city=City::findOrFail($id);
+        // $city=City::findOrFail($id);
         return view('Admin.cities.edit',['city'=>$city,'statuses'=>self::AVAILABLE_STATUS]);
     }
-    public function update(UpdateCityRequest $request , $id)
+    public function update(UpdateCityRequest $request ,City $city)
     {
-        City::findOrFail($id)->update($request->all());
+        $city->update($request->all());
         return redirect()->route('cities.index')->with('success','تمت العملية بنجاج');
     }
-    public function destroy($id)
+    public function destroy(City $city)
     {
-        $city=City::findOrFail($id)->delete();
+        $city->delete();
         return  redirect()->back()->with('success','تمت العملية بنجاح');
     }
 

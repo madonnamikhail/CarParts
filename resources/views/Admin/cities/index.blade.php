@@ -13,7 +13,9 @@
             <thead>
                 <tr class="text-dark">
                     <th>الرقم</th>
-                    <th>أسم المدينة</th>
+                    <th> أسم المدينة باللغة العربية</th>
+                    <th> أسم المدينة باللغة الانجليزية</th>
+
                     <th>الحالة</th>
                     <th>تاريخ الانشاء</th>
                     <th>تاريخ التعديل</th>
@@ -24,13 +26,14 @@
                 @forelse ($cities as  $city)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $city->name }}</td>
+                        <td>{{$city->getTranslation('name' , 'ar')}}</td>
+                        <td>{{$city->getTranslation('name' , 'en')}}</td>
                         <td><label class="badge badge-{{ $city->status == 1 ? 'success' : 'danger' }}">{{ $city->status == 1 ? 'مفعل' : 'غير مفعل' }}</label>
                         </td>
                         <td>{{ $city->created_at }}</td>
                         <td>{{ $city->updated_at }}</td>
-                        <td><a href="{{route('cities.edit',['id' => $city->id])}}" class="btn btn-outline-primary btn-sm">تعديل</a>
-                            <form action="{{route('cities.destroy',['id' => $city->id])}}" method="post" class="d-inline">
+                        <td><a href="{{route('cities.edit',$city->id)}}" class="btn btn-outline-primary btn-sm">تعديل</a>
+                            <form action="{{route('cities.destroy',$city->id)}}" method="post" class="d-inline">
                                 @csrf
                                 @method("DELETE")
                                 <button class="btn btn-outline-danger btn-sm">حذف</button>

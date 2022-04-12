@@ -25,7 +25,10 @@ class StoreCityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>['required','max:32','unique:cities,name'],
+            // 'name'=>['required','max:32','unique:cities,name'],
+            'name'=>['array:en,ar'],
+            'name.en'=>['required','max:32'],
+            'name.ar'=>['required','max:32'],
             'status'=>['required','in:'.implode(',',CitiesController::AVAILABLE_STATUS)]
         ];
     }

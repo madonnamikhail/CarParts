@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Brand extends Model implements HasMedia
 {
-    use HasFactory , InteractsWithMedia , HasTranslations ,HasTranslatableSlug , EscapeUniCodeJson; //HasSlug HasTranslatableSlug
+    use HasFactory , InteractsWithMedia , HasTranslations ,HasTranslatableSlug , EscapeUniCodeJson; 
     public $fillable = ['name','status'];
     public $translatable = ['name' , 'slug'];
 

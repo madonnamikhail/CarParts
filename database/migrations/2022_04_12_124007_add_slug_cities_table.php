@@ -13,7 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('models', function (Blueprint $table) {
+        //
+        Schema::table('cities', function (Blueprint $table) {
             $table->string('slug',255)->after('status'); // Field name same as your `saveSlugsTo`
             $table->json('name')->change();
 
@@ -27,6 +28,7 @@ return new class extends Migration
      */
     public function down()
     {
+        //
         Schema::table('models', function (Blueprint $table) {
             $table->dropColumn('slug'); // Field name same as your `saveSlugsTo`
         });

@@ -37,14 +37,16 @@ Route::group(['prefix'=>'admin'],function(){
     Route::resource('brands', BrandsController::class);
 
     //Cities
-    Route::group(['prefix'=>'cities','as'=>'cities.','controller'=>CitiesController::class],function(){
-        Route::get('/','index')->name('index');
-        Route::get('creat','create')->name('create');
-        Route::post('store','store')->name('store');
-        Route::get('{id}/edit','edit')->name('edit');
-        Route::put('{id}/update','update')->name('update');
-        Route::delete('{id}/destroy','destroy')->name('destroy');
-    });
+    // Route::group(['prefix'=>'cities','as'=>'cities.','controller'=>CitiesController::class],function(){
+    //     Route::get('/','index')->name('index');
+    //     Route::get('creat','create')->name('create');
+    //     Route::post('store','store')->name('store');
+    //     Route::get('{id}/edit','edit')->name('edit');
+    //     Route::put('{id}/update','update')->name('update');
+    //     Route::delete('{id}/destroy','destroy')->name('destroy');
+    // });
+    Route::resource('cities', CitiesController::class);
+
     //models
     // Route::group(['prefix'=>'models','as'=>'models.','controller'=>ModelsController::class],function(){
     //     Route::get('/','index')->name('index');

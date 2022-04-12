@@ -6,13 +6,18 @@
     </div>
     @include('includes.validation-errors')
     <div class="col-12">
-        <form method="post" action="{{ route('cities.update',['id'=>$city->id]) }}">
+        <form method="post" action="{{ route('cities.update',$city->id) }}">
             @method('put')
             @csrf
             <div class="form-group">
-                <label for="name">اسم المدينة</label>
-                <input type="name" name="name" value={{$city->name}} class="form-control" id="name" placeholder="ادخل اسم العلامة التجارية">
-                <small id="name" class="form-text text-muted">اسم المدينة يجب ان يكون مميز و خاص بك </small>
+                <label for="name"> اسم المدينة باللغة العربية</label>
+                <input type="name" name="name[ar]" value={{$city->getTranslation('name' , 'ar')}} class="form-control" id="name" placeholder="ادخل اسم العلامة التجارية">
+                <small id="name" class="form-text text-muted">اسم المدينة العربية يجب ان يكون مميز و خاص بك </small>
+            </div>
+            <div class="form-group">
+                <label for="name"> اسم المدينة باللغة الانجليزية</label>
+                <input type="name" name="name[en]" value={{$city->getTranslation('name' , 'en')}} class="form-control" id="name" placeholder="ادخل اسم العلامة التجارية">
+                <small id="name" class="form-text text-muted">اسم المدينة الانجليزية يجب ان يكون مميز و خاص بك </small>
             </div>
             <div class="form-group">
                 <label for="status">حالة المدينة</label>
