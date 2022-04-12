@@ -25,8 +25,10 @@ class StoreModelRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>['required','max:32','unique:cities,name'],
-            'year'=>['required','between:1970,2050'],
+            'name'=>['array:en,ar'],
+            'name.en'=>['required','max:32','unique_translation:models'],
+            'name.ar'=>['required','max:32','unique_translation:models'],
+            // 'year'=>['required','between:1970,2050'],
             'brand_id'=>['required','exists:brands,id'],
             'status'=>['required','in:'.implode(',',ModelsController::AVAILABLE_STATUS)],
             'image'=>['required','max:1024','mimes:png,jpg:'.implode(',',ModelsController::AVAILABLE_EXTENSIONS)]

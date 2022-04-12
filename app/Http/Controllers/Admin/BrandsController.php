@@ -62,9 +62,9 @@ class BrandsController extends Controller
         return  redirect()->route('brands.index')->with('success', 'تمت العملية بنجاح');
     }
 
-    public function destroy($id)
+    public function destroy(Brand $brand)
     {
-        $brand = Brand::findOrFail($id)->delete();
+        $brand->delete();
         return  redirect()->back()->with('success', 'تمت العملية بنجاح');
     }
 }

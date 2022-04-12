@@ -36,17 +36,15 @@ class ModelsController extends Controller
         }
         return redirectAccordingToRequest($request ,'success');
     }
-    public function edit($id)
+    public function edit(Models $model)
     {
-
-        $model=Models::findOrFail($id);
         // return asset($model->getFirstMediaUrl('models'));
         $brands=Brand::get();
         return view('Admin.models.edit',['model'=>$model,'brands'=>$brands,'statuses'=>self::AVAILABLE_STATUS]);
     }
-    public function update(UpdateModelRequest $request , $id)
+    public function update(UpdateModelRequest $request , Models $model)
     {
-        $model=Models::findOrFail($id);
+        // $model=Models::findOrFail($id);
         $model->update($request->all());
         if($request->hasFile('image')){
             $model->getMedia('models')[0]->delete();
@@ -56,8 +54,6 @@ class ModelsController extends Controller
             $model=Models::find($request->id);
             Image::make($model->getFirstMediaPath('models'))->resize($request->width, $request->height)->save($model->getFirstMediaPath('models'));
         }
-
-
         return redirect()->route('models.index')->with('success','تمت العملية بنجاح');
     }
     public function destroy($id)

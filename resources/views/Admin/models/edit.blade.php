@@ -1,29 +1,38 @@
 @extends('layouts.admin')
 @section('title', 'تعديل الموديل')
+@push('css')
+{{-- <link href="https://netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"> --}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css" rel="stylesheet">
+@endpush
 @section('content')
     <div class="col-12">
         <h1 class="h1 text-center text-dark">تعديل الموديل</h1>
     </div>
     @include('includes.validation-errors')
     <div class="col-12">
-        <form method="post" action="{{ route('models.update',['id'=>$model->id]) }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('models.update',$model->id) }}" enctype="multipart/form-data">
             @method('put')
             @csrf
             <div class="form-group">
-                <label for="name">اسم الموديل</label>
-                <input type="name" name="name" value={{$model->name}} class="form-control" id="name" placeholder="ادخل اسم الموديل">
-                <small id="name" class="form-text text-muted">اسم الموديل يجب ان يكون مميز و خاص بك </small>
+                <label for="name" class="font-weight-bold"> اسم الموديل باللغة الانجليزية</label>
+                <input type="name" name="name[en]" value="{{ $model->getTranslation('name', 'en') }}"class="form-control" id="name" placeholder="ادخل اسم الموديل">
+                <small id="name" class="form-text text-muted">اسم الموديل الانجليزي يجب ان يكون مميز و خاص بك </small>
+            </div>
+            <div class="form-group">
+                <label for="name" class="font-weight-bold"> اسم الموديل باللغة العربية</label>
+                <input type="name" name="name[ar]" value="{{ $model->getTranslation('name', 'ar') }}"class="form-control" id="name" placeholder="ادخل اسم الموديل">
+                <small id="name" class="form-text text-muted">اسم الموديل العربي يجب ان يكون مميز و خاص بك </small>
             </div>
             <div class="form-group">
                 <label for="year">سنة الموديل</label>
-                <input type="year" name="year" value={{$model->year}} class="form-control" id="year" placeholder="ادخل سنة الموديل">
-                <small id="year" class="form-text text-muted">سنة الموديل يجب ان يكون مميز و خاص بك </small>
+                <input type="year" name="year" value={{$model->year}} class="form-control" id="datepicker" placeholder="ادخل سنة الموديل">
+                <small id="datepicker" class="form-text text-muted">سنة الموديل يجب ان يكون مميز و خاص بك </small>
             </div>
             <div class="form-group">
                 <label for="status">حالة الموديل</label>
                 <select name="status" class="custom-select" id="status">
                     @foreach ($statuses as $status => $value)
-                        <option @selected($model->status === $model) value="{{ $value }}"> {{ $status }}</option>
+                        <option @selected($model->status == $value) value="{{ $value }}"> {{ $status }}</option>
                     @endforeach
                 </select>
             </div>
@@ -80,4 +89,19 @@
         $('#resizebox').toggleClass('d-none');
       });
   </script>
+@endpush
+@push('js')
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+
+    $("#datepicker").datepicker({
+    format: "yyyy",
+    viewMode: "years",
+    minViewMode: "years",
+    autoclose:true //to close picker once year is selected
+});
+</script>
 @endpush
