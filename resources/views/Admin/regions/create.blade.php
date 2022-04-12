@@ -9,9 +9,14 @@
         <form method="post" action="{{ route('regions.store') }}">
             @csrf
             <div class="form-group">
-                <label for="name">اسم منطقة</label>
-                <input type="name" name="name" value="{{old('name')}}" class="form-control" id="name" placeholder="ادخل اسم منطقة ">
-                <small id="name" class="form-text text-muted">اسم منطقة يجب ان يكون مميز و خاص بك </small>
+                <label for="name">اسم منطقة باللغة الانجليزية</label>
+                <input type="name" name="name[en]" value="{{old('name.en')}}" class="form-control" id="name" placeholder="ادخل اسم منطقة باللغة الانجليزية">
+                <small id="name" class="form-text text-muted">اسم منطقة الانجليزية يجب ان يكون مميز و خاص بك </small>
+            </div>
+            <div class="form-group">
+                <label for="name">اسم منطقة باللغة العربية</label>
+                <input type="name" name="name[ar]" value="{{old('name.ar')}}" class="form-control" id="name" placeholder="ادخل اسم منطقة باللغة العربية">
+                <small id="name" class="form-text text-muted">اسم منطقة العربية يجب ان يكون مميز و خاص بك </small>
             </div>
             <div class="form-group">
                 <label for="status">حالة منطقة</label>
@@ -43,7 +48,7 @@
                 <select name="city_id" class="custom-select" id="city_id">
                     <option selected disabled>احتر المدينة</option>
                     @foreach ($cities as $city)
-                        <option @selected(old('city_id') == $city->id) value="{{ $city->id }}"> {{ $city->name }}</option>
+                        <option @selected(old('city_id') == $city->id) value="{{ $city->id }}"> {{ $city->getTranslation('name','en') }} - {{ $city->getTranslation('name','ar') }} </option>
                     @endforeach
                 </select>
             </div>

@@ -13,7 +13,8 @@
             <thead>
                 <tr class="text-dark">
                     <th>الرقم</th>
-                    <th>أسم المنطقة </th>
+                    <th>أسم المنطقة باللغة العربية</th>
+                    <th>أسم المنطقة باللغة الانجليزية</th>
                     <th>الحالة</th>
                     <th>خط العرض</th>
                     <th>خط الطول</th>
@@ -28,7 +29,9 @@
                 @forelse ($regions as  $region)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $region->name }}</td>
+                        <td>{{ $region->getTranslation('name','ar') }}</td>
+                        <td>{{ $region->getTranslation('name','en') }}</td>
+
                         <td><label class="badge badge-{{ $region->status == 1 ? 'success' : 'danger' }}">{{ $region->status == 1 ? 'مفعل' : 'غير مفعل' }}</label>
                         </td>
                         <td>{{ $region->latitude }}</td>

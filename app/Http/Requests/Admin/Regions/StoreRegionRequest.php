@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\Regions;
 
+use App\Http\Controllers\Admin\RegionsController;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRegionRequest extends FormRequest
@@ -25,6 +26,11 @@ class StoreRegionRequest extends FormRequest
     {
         return [
             //
+            'name'=>['array:en,ar'],
+            'name.en'=>['required','max:32'],
+            'name.ar'=>['required','max:32'],
+            'status'=>['required','in:'.implode(',',RegionsController::AVAILABLE_STATUS)],
+
         ];
     }
 }

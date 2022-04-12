@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Regions;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Controllers\Admin\RegionsController;
 
 class UpdateRegionRequest extends FormRequest
 {
@@ -25,6 +26,10 @@ class UpdateRegionRequest extends FormRequest
     {
         return [
             //
+            'name'=>['array:en,ar'],
+            'name.en'=>['required','max:32'],
+            'name.ar'=>['required','max:32'],
+            'status'=>['required','in:'.implode(',',RegionsController::AVAILABLE_STATUS)],
         ];
     }
 }

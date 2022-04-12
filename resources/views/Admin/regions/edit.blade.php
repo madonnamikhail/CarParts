@@ -10,9 +10,14 @@
             @method('put')
             @csrf
             <div class="form-group">
-                <label for="name">اسم المنطقة</label>
-                <input type="name" name="name" value={{$region->name}} class="form-control" id="name" placeholder="ادخل اسم المنطقة">
-                <small id="name" class="form-text text-muted">اسم المنطقة يجب ان يكون مميز و خاص بك </small>
+                <label for="name">اسم المنطقة باللغة الانجليزية</label>
+                <input type="name" name="name[en]" value={{$region->getTranslation('name','en')}} class="form-control" id="name" placeholder="ادخل اسم المنطقة">
+                <small id="name" class="form-text text-muted">اسم المنطقة الانجليزية يجب ان يكون مميز و خاص بك </small>
+            </div>
+            <div class="form-group">
+                <label for="name">اسم المنطقة باللغة العربية</label>
+                <input type="name" name="name[ar]" value={{$region->getTranslation('name','ar')}} class="form-control" id="name" placeholder="ادخل اسم المنطقة">
+                <small id="name" class="form-text text-muted">اسم المنطقة العربية يجب ان يكون مميز و خاص بك </small>
             </div>
             <div class="form-group">
                 <label for="status">حالة المدينة</label>
@@ -43,13 +48,11 @@
                 <select name="city_id" class="custom-select" id="city_id">
                     <option selected disabled>احتر المدينة</option>
                     @foreach ($cities as $city)
-                          <option @selected($region->city_id == $city->id) value="{{ $city->id }}"> {{ $city->name }}</option>
+                          <option @selected($region->city_id == $city->id) value="{{ $city->id }}">{{ $city->getTranslation('name','en') }} - {{ $city->getTranslation('name','ar') }}</option>
                      @endforeach
                 </select>
             </div>
             <button type="submit" name="edit" class="btn btn-primary">تعديل </button>
-            {{-- <button type="submit" name="create-return" class="btn btn-outline-primary">انشاء و رجوع  </button> --}}
-
         </form>
     </div>
 
