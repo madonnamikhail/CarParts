@@ -1,8 +1,11 @@
 @extends('layouts.admin')
-@section('title', 'تعديل مدينة')
+@section('title', "تعديل {$city->name}")
+@section('breadcrumb')
+{{ Breadcrumbs::render('cities.edit',$city) }}
+@endsection
 @section('content')
     <div class="col-12">
-        <h1 class="h1 text-center text-dark">تعديل مدينة</h1>
+        <h1 class="h1 text-center text-dark">@yield('title')</h1>
     </div>
     @include('includes.validation-errors')
     <div class="col-12">

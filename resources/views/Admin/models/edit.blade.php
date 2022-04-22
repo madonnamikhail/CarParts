@@ -1,12 +1,15 @@
 @extends('layouts.admin')
-@section('title', 'تعديل الموديل')
+@section('title', "تعديل {$model->name}")
+@section('breadcrumb')
+{{ Breadcrumbs::render('models.edit',$model) }}
+@endsection
 @push('css')
 {{-- <link href="https://netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"> --}}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css" rel="stylesheet">
 @endpush
 @section('content')
     <div class="col-12">
-        <h1 class="h1 text-center text-dark">تعديل الموديل</h1>
+        <h1 class="h1 text-center text-dark">@yield('title')</h1>
     </div>
     @include('includes.validation-errors')
     <div class="col-12">

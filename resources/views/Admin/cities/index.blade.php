@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('title','كل المدن')
+@section('breadcrumb')
+{{ Breadcrumbs::render('cities.index') }}
+@endsection
 @section('content')
 <div class="col-12">
     <h1 class="h1 text-center text-dark"> المدن </h1>

@@ -27,11 +27,11 @@ class UpdateBrandRequest extends FormRequest
         return [
             // 'name'=>['required','max:32',"unique:brands,name,{$this->id},id"],
             'name'=>['array:en,ar'],
-            'name.en'=>['required','max:32'],
-            'name.ar'=>['required','max:32'],
+            'name.en'=>['required','max:32',"unique_translation:brands,name,{$this->brand->id},id"],
+            'name.ar'=>['required','max:32',"unique_translation:brands,name,{$this->brand->id},id"],
             'status'=>['required','in:'.implode(',',BrandsController::AVAILABLE_STATUS)],
-            'width'=>['required_with:resize'],//,'integer','between:50,1080'
-            'heigth'=>['required_with:resize'],//,'integer','between:50,1080'
+            'width'=>['required_if:resize,ok','integer','between:50,1080'],//,'integer','between:50,1080'
+            'heigth'=>['required_if:resize,ok','integer','between:50,1080'],//,'integer','between:50,1080'
 
         ];
     }

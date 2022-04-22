@@ -1,8 +1,11 @@
 @extends('layouts.admin')
-@section('title', 'تعديل المنطقة')
+@section('title', "تعديل {$region->name}")
+@section('breadcrumb')
+{{ Breadcrumbs::render('regions.edit',$region) }}
+@endsection
 @section('content')
     <div class="col-12">
-        <h1 class="h1 text-center text-dark">تعديل المنطقة</h1>
+        <h1 class="h1 text-center text-dark">@yield('title')</h1>
     </div>
     @include('includes.validation-errors')
     <div class="col-12">

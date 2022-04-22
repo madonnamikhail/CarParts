@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('title', 'انشاء موديل')
+@section('breadcrumb')
+{{ Breadcrumbs::render('models.create') }}
+@endsection
 @push('css')
 {{-- <link href="https://netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"> --}}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css" rel="stylesheet">

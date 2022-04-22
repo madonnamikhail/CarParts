@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('title','كل العلامات التجارية')
+@section('breadcrumb')
+{{ Breadcrumbs::render('brands.index') }}
+@endsection
 @section('content')
     <div class="col-12">
         <h1 class="h1 text-center text-dark"> العلامات التجارية </h1>

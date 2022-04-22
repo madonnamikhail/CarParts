@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::table('models', function (Blueprint $table) {
             $table->string('slug',255)->after('status'); // Field name same as your `saveSlugsTo`
-            $table->json('name')->change();
 
         });
     }

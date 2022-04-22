@@ -50,14 +50,18 @@ class BrandsController extends Controller
     {
         // return $request;
         // $brand = Brand::findOrFail($id);
-        $brand->update($request->all());
+        $brand->update($request->validated());
         if ($request->hasFile('image')) {   //check if request has image or not
-            $brand->getMedia('brands')[0]->delete(); //remove old image
+            if(isset($brand->getMedia('brands')[0])){ //if image exist in collection
+                $brand->getMedia('brands')[0]->delete(); //remove old image
+            }
             $brand->addMediaFromRequest('image')->toMediaCollection('brands'); //store new image
         }
+
         if ($request->has('resize')) {
-            $brand=Brand::find($request->id);
-            Image::make($brand->getFirstMediaPath('brands'))->resize($request->width, $request->height)->save($brand->getFirstMediaPath('brands'));
+            $brand=Brand::find($brand->id);
+            // return $brand->getFirstMediaPath('brands');
+            Image::make($brand->getFirstMediaPath('brands'))->resize($request->input('width'), $request->input('height'))->save($brand->getFirstMediaPath('brands'));
         }
         return  redirect()->route('brands.index')->with('success', 'تمت العملية بنجاح');
     }
@@ -66,5 +70,8 @@ class BrandsController extends Controller
     {
         $brand->delete();
         return  redirect()->back()->with('success', 'تمت العملية بنجاح');
+    }
+    public function test(){
+        return "test";
     }
 }

@@ -11,15 +11,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class City extends Model
 {
-    use HasFactory , HasTranslations ,HasTranslatableSlug , EscapeUniCodeJson;
+    use HasFactory , HasTranslations  , EscapeUniCodeJson;
     public $fillable = ['name','status'];
-    public $translatable = ['name','slug'];
+    public $translatable = ['name'];
 
-    public function getSlugOptions() : SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
-    }
+
 
 }

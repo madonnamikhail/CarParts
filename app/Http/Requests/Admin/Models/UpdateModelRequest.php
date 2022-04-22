@@ -26,10 +26,15 @@ class UpdateModelRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>['required','max:32',"unique:brands,name,{$this->id},id"],
-            'year'=>['required','max:32'],
-            // 'brand_id'=>['required','exists:brands,id'],
-            'status'=>['required','in:'.implode(',',ModelsController::AVAILABLE_STATUS)]
+            'name'=>['array:en,ar'],
+            'name.en'=>['required','max:32',"unique_translation:models,name,{$this->model->id},id"],
+            'name.ar'=>['required','max:32',"unique_translation:models,name,{$this->model->id},id"],
+            'year'=>['required','integer','min:1990','max:2022'],
+            'brand_id'=>['required','exists:brands,id'],
+            'status'=>['required','in:'.implode(',',ModelsController::AVAILABLE_STATUS)],
+            'image'=>['required','max:1024','mimes:'.implode(',',ModelsController::AVAILABLE_EXTENSIONS)],
+            'width'=>['required_if:resize,ok','integer','between:50,1080'],//,'integer','between:50,1080'
+            'heigth'=>['required_if:resize,ok','integer','between:50,1080'],//,'integer','between:50,1080'
         ];
     }
 }

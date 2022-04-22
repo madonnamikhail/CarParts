@@ -1,5 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Dashboard')
+@section('title', 'الصفحة الرئيسية')
+@section('breadcrumb')
+{{ Breadcrumbs::render('dashboard') }}
+
+@endsection
 
 @section('content')
     <!-- widgets -->

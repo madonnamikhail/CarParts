@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('title', 'انشاء منطقة')
+@section('breadcrumb')
+{{ Breadcrumbs::render('regions.index') }}
+@endsection
 @section('content')
     <div class="col-12">
         <h1 class="h1 text-center text-dark">انشاء منطقة</h1>

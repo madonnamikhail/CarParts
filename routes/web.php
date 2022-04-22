@@ -34,9 +34,9 @@ Route::group(['prefix'=>'admin'],function(){
     //     Route::put('{brand}/update','update')->name('update');
     //     Route::delete('{brand}/destroy','destroy')->name('destroy');
     // });
-    Route::resource('brands', BrandsController::class);
-    Route::resource('cities', CitiesController::class);
-    Route::resource('models', ModelsController::class);
+    Route::resource('brands', BrandsController::class)->except('show');
+    Route::resource('cities', CitiesController::class)->except('show');
+    Route::resource('models', ModelsController::class)->except('show');
 
     //regions
     Route::group(['prefix'=>'regions','as'=>'regions.','controller'=>RegionsController::class],function(){
@@ -65,3 +65,7 @@ Route::group(['prefix'=>'admin'],function(){
 Route::group([],function(){
 
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
