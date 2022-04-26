@@ -53,7 +53,7 @@ class ModelsController extends Controller
             $model->addMediaFromRequest('image')->toMediaCollection('models');
         }
         if ($request->has('resize')) {
-            $model = Models::find($request->id);
+            $model = Models::find($model->id);
             Image::make($model->getFirstMediaPath('models'))->resize($request->width, $request->height)->save($model->getFirstMediaPath('models'));
         }
         return redirect()->route('models.index')->with('success', 'تمت العملية بنجاح');

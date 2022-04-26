@@ -33,8 +33,9 @@ class UpdateModelRequest extends FormRequest
             'brand_id'=>['required','exists:brands,id'],
             'status'=>['required','in:'.implode(',',ModelsController::AVAILABLE_STATUS)],
             'image'=>['required','max:1024','mimes:'.implode(',',ModelsController::AVAILABLE_EXTENSIONS)],
-            'width'=>['required_if:resize,ok','integer','between:50,1080'],//,'integer','between:50,1080'
-            'heigth'=>['required_if:resize,ok','integer','between:50,1080'],//,'integer','between:50,1080'
+            'width'=>['required_if:resize,exist','nullable','integer','between:50,1080'], //,'integer','between:50,1080'
+            'height'=>['required_if:resize,exist','nullable','integer','between:50,1080'],
+           
         ];
     }
 }

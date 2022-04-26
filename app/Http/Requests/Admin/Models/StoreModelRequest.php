@@ -31,9 +31,9 @@ class StoreModelRequest extends FormRequest
             'year'=>['required','integer','min:1990','max:2022'],
             'brand_id'=>['required','exists:brands,id'],
             'status'=>['required','in:'.implode(',',ModelsController::AVAILABLE_STATUS)],
-            'image'=>['required','max:1024','mimes:png,jpg:'.implode(',',ModelsController::AVAILABLE_EXTENSIONS)]
-        //     'width'=>['required_if:resize,ok','integer','between:50,1080'],//,'integer','between:50,1080'
-        //     'heigth'=>['required_if:resize,ok','integer','between:50,1080'],//,'integer','between:50,1080'
+            'image'=>['required','max:1024','mimes:png,jpg:'.implode(',',ModelsController::AVAILABLE_EXTENSIONS)],
+            'width'=>['required_if:resize,exist','nullable','integer','between:50,1080'], //,'integer','between:50,1080'
+            'height'=>['required_if:resize,exist','nullable','integer','between:50,1080'],
         ];
     }
 }

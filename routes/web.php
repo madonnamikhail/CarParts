@@ -1,11 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BrandsController;
 use App\Http\Controllers\Admin\CitiesController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ModelsController;
 use App\Http\Controllers\Admin\RegionsController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,29 +25,24 @@ Route::get('/', function () {
 
 //Admin Dashboard
 Route::group(['prefix'=>'admin'],function(){
-    Route::get('/', DashboardController::class)->name('dashboard');
-    //Brands
-    // Route::group(['prefix'=>'brands','as'=>'brands.','controller'=>BrandsController::class],function(){
-    //     Route::get('/','index')->name('index');
-    //     Route::get('create','create')->name('create');
-    //     Route::get('{brand}/edit','edit')->name('edit');
-    //     Route::post('store','store')->name('store');
-    //     Route::put('{brand}/update','update')->name('update');
-    //     Route::delete('{brand}/destroy','destroy')->name('destroy');
-    // });
-    Route::resource('brands', BrandsController::class)->except('show');
-    Route::resource('cities', CitiesController::class)->except('show');
-    Route::resource('models', ModelsController::class)->except('show');
-
-    //regions
-    Route::group(['prefix'=>'regions','as'=>'regions.','controller'=>RegionsController::class],function(){
-        Route::get('/','index')->name('index');
-        Route::get('create','create')->name('create');
-        Route::post('store','store')->name('store');
-        Route::get('{id}/edit','edit')->name('edit');
-        Route::put('{id}/update','update')->name('update');
-        Route::delete('{id}/destroy','destroy')->name('destroy');
+    Route::middleware('verified:admin')->group(function(){ //auth:admin
+        Route::get('/', DashboardController::class)->name('dashboard');
+        Route::resource('brands', BrandsController::class)->except('show');
+        Route::resource('cities', CitiesController::class)->except('show');
+        Route::resource('models', ModelsController::class)->except('show');
+        //regions
+        Route::group(['prefix'=>'regions','as'=>'regions.','controller'=>RegionsController::class],function(){
+            Route::get('/','index')->name('index');
+            Route::get('create','create')->name('create');
+            Route::post('store','store')->name('store');
+            Route::get('{id}/edit','edit')->name('edit');
+            Route::put('{id}/update','update')->name('update');
+            Route::delete('{id}/destroy','destroy')->name('destroy');
+        });
     });
+
+    Auth::routes(['register' => (bool)config('app.admins'), 'verify' => true]);//, 'verify' => true
+
 
 
 
@@ -66,6 +62,4 @@ Route::group([],function(){
 
 });
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

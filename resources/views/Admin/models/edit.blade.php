@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="checkbox" name="resize" @checked(old('change')==='true') id="resize">
+                <input type="checkbox" name="resize" @checked(old('change')==='true') id="resize" value="exist">
                 <label for="resize">تغيير ابعاد الصورة</label>
                 <div class="row d-none" id="resizebox">
                     <div class="col-2">
@@ -66,7 +66,7 @@
                     </div>
                     <div class="col-2">
                         <small class="form-text text-muted">ادخل طول الصورة المطلوب</small>
-                        <input type="number" name="heigth" value="{{old('heigth')}}">
+                        <input type="number" name="height" value="{{old('height')}}">
                     </div>
                 </div>
             </div>

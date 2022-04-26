@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" dir="rtl">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="keywords" content="HTML5 Template" />
     <meta name="description" content="Webmin - Bootstrap 4 & Angular 5 Admin Dashboard Template" />
     <meta name="author" content="potenzaglobalsolutions.com" />
@@ -19,6 +21,10 @@
 
     <!-- css -->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/css/style.css')}}" />
+     <!-- Scripts -->
+     {{-- <script src="{{ asset('assets/admin/js/app.js') }}" defer></script>
+     <!-- Styles -->
+    <link href="{{ asset('assets/admin/css/app.css') }}" rel="stylesheet"> --}}
     @stack('css')
 </head>
 
@@ -122,20 +128,23 @@
                         <div class="dropdown-header">
                             <div class="media">
                                 <div class="media-body">
-                                    <h5 class="mt-0 mb-0">Michael Bean</h5>
-                                    <span>michael-bean@mail.com</span>
+                                    <h5 class="mt-0 mb-0">{{Auth::guard('admin')->user()->name}}</h5>
+                                    <span>{{Auth::guard('admin')->user()->email}}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><i class="text-secondary ti-reload"></i>Activity</a>
-                        <a class="dropdown-item" href="#"><i class="text-success ti-email"></i>Messages</a>
-                        <a class="dropdown-item" href="#"><i class="text-warning ti-user"></i>Profile</a>
-                        <a class="dropdown-item" href="#"><i class="text-dark ti-layers-alt"></i>Projects <span
-                                class="badge badge-info">6</span> </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><i class="text-info ti-settings"></i>Settings</a>
-                        <a class="dropdown-item" href="#"><i class="text-danger ti-unlock"></i>Logout</a>
+                        <a class="dropdown-item" href="#"><i class="text-warning ti-user"></i>الصفحة الشخصية</a>
+                        <a class="dropdown-item" href="#"><i class="text-info ti-settings"></i>الاعدادات</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                            <i class="text-danger ti-unlock"></i>تسجيل الجروج
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </div>
                 </li>
             </ul>
