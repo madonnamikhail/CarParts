@@ -71,7 +71,5 @@ class BrandsController extends Controller
         $brand->delete();
         return  redirect()->back()->with('success', 'تمت العملية بنجاح');
     }
-    public function test(){
-        return "test";
-    }
+
 }

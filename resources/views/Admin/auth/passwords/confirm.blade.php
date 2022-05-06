@@ -1,23 +1,21 @@
 @extends('layouts.app')
-
+@section('title','تأكيد كلمة المرور')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Confirm Password') }}</div>
+<section class="height-100vh d-flex align-items-center page-section-ptb login"
+        style="background-image: url({{ asset('assets/admin/images/bg/1.jpg') }});background-repeat: no-repeat;background-size:cover">
+        <div class="container">
+            <div class="row justify-content-center no-gutters vertical-align">
+                <div class="col-lg-6 col-md-6 bg-white">
 
-                <div class="card-body">
-                    {{ __('Please confirm your password before continuing.') }}
-
-                    <form method="POST" action="{{ route('password.confirm') }}">
+                    <form action="{{ route('password.confirm')}}" method="post">
                         @csrf
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                        <div class="login-fancy pb-40 clearfix">
+                            <h3 class="mb-30">يرجى تأكيد كلمة المرور الخاصة بك قبل المتابعة. </h3>
+                            <div class="section-field mb-20">
+                                <label class="mb-10" for="Password">كلمة المرور* </label>
+                                <input id="password" type="password"
+                                    class="Password form-control @error('password') is-invalid @enderror" name="password"
+                                    required autocomplete="current-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -25,25 +23,20 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Confirm Password') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
+                            <button class="button">
+                                <span> تأكيد كلمة المرور </span>
+                                <i class="fa fa-check"></i>
+                            </button>
+                            @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
+                                        هل نسيت كلمة المرور؟
                                     </a>
-                                @endif
-                            </div>
+                            @endif
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 @endsection

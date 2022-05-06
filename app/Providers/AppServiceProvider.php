@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Admin;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,9 +26,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        $admin = Admin::all()->first();
-        if($admin){
-            config(['app.admins'=>false]);
-        }
+        // $admin = Admin::all()->first();
+        // if($admin){
+        //     config(['app.admins'=>false]);
+        // }
+
+        // try {
+        //     $admin = Admin::all()->first();
+        //     config(['app.admins'=>false]);
+        // } catch (\Exception $exception) {
+
+        // }
     }
 }
