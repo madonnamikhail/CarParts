@@ -7,9 +7,12 @@
 <div class="col-12">
     <h1 class="h1 text-center text-dark"> المناطق </h1>
 </div>
-<div class="col-12">
-    <a href="{{ route('regions.create') }}" class="btn btn-primary rounded btn-sm"> أنشاء علامة تجارية </a>
-</div>
+    @if (can('Store Regions','admin'))
+        <div class="col-12">
+            <a href="{{ route('regions.create') }}" class="btn btn-primary rounded btn-sm"> أنشاء علامة تجارية </a>
+        </div>
+    @endif
+
 <div class="col-12">
     <div class="table-responsive mt-15">
         <table class="table center-aligned-table mb-0">
@@ -49,12 +52,17 @@
                         </td>
                         <td>{{ $region->created_at }}</td>
                         <td>{{ $region->updated_at }}</td>
-                        <td><a href="{{route('regions.edit',['id' => $region->id])}}" class="btn btn-outline-primary btn-sm">تعديل</a>
-                            <form action="{{route('regions.destroy',['id' => $region->id])}}" method="post" class="d-inline">
-                                @csrf
-                                @method("DELETE")
-                                <button class="btn btn-outline-danger btn-sm">حذف</button>
-                            </form>
+                        <td>
+                            @if (can('Update Regions','admin'))
+                                <a href="{{route('regions.edit',['id' => $region->id])}}" class="btn btn-outline-primary btn-sm">تعديل</a>
+                            @endif
+                            @if (can('Destroy Regions','admin'))
+                                <form action="{{route('regions.destroy',['id' => $region->id])}}" method="post" class="d-inline">
+                                    @csrf
+                                    @method("DELETE")
+                                    <button class="btn btn-outline-danger btn-sm">حذف</button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @empty

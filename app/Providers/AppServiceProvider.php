@@ -31,11 +31,13 @@ class AppServiceProvider extends ServiceProvider
         //     config(['app.admins'=>false]);
         // }
 
-        // try {
-        //     $admin = Admin::all()->first();
-        //     config(['app.admins'=>false]);
-        // } catch (\Exception $exception) {
+        try {
+            $admin = Admin::first();
+            if($admin){
+                config(['app.admins'=>false]);
+            }
+        } catch (\Exception $exception) {
 
-        // }
+        }
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\admin\Roles;
+namespace App\Http\Requests\Admin\Admins;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRoleRequest extends FormRequest
+class UpdateAdminPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,9 @@ class StoreRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            //
-            'name'=>['required','unique:roles,id,'],
-            'permission_id'=>['array'],
-            'permission_id.*'=>['integer','exists:permissions,id'],
+            'old_password'=>['required'],
+            'password'=>['required','regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/','confirmed'],
+            'password_confirmation'=>['required']
         ];
     }
 }

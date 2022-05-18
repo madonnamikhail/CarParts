@@ -11,6 +11,14 @@ use App\Http\Requests\admin\Roles\UpdateRoleRequest;
 
 class RolesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('superadmin.prevent.update')->only('edit', 'update', 'destroy');
+        $this->middleware('permission:Update Roles,admin')->only('edit', 'update');
+        $this->middleware('permission:Store Roles,admin')->only('create', 'store');
+        $this->middleware('permission:Index Roles,admin')->only('index');
+        $this->middleware('permission:Destroy Roles,admin')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +27,8 @@ class RolesController extends Controller
     public function index()
     {
         //
-        $roles=Role::all();
-        return view('Admin.roles.index',compact('roles'));
+        $roles = Role::whereNot('id', 1)->get();
+        return view('Admin.roles.index', compact('roles'));
     }
 
     /**
@@ -31,7 +39,7 @@ class RolesController extends Controller
     public function create()
     {
         $controller_permissions = Permission::all()->groupBy('controller');
-        return view('Admin.roles.create',compact('controller_permissions'));
+        return view('Admin.roles.create', compact('controller_permissions'));
     }
 
     /**
@@ -42,17 +50,19 @@ class RolesController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
-        try{
+        try {
             //1-store new role
-            $role = Role::create(['name'=>$request->name,'guard_name'=>'admin']);
+            $role = Role::create(['name' => $request->name, 'guard_name' => 'admin']);
             //2-assgin permissions to this role
-                //to assgin more than one role at the same time
+            //to assgin more than one role at the same time
+            if ($request->has('permission_id')) {
+                $role->syncPermissions($request->permission_id);
+            }
             $role->syncPermissions($request->permission_id);
-            return $this->redirectAccordingToRequest($request,'success');
-        }catch(\Exception $e){
-            return $this->redirectAccordingToRequest($request,'error');
+            return $this->redirectAccordingToRequest($request, 'success');
+        } catch (\Exception $e) {
+            return $this->redirectAccordingToRequest($request, 'error');
         }
-
     }
 
     /**
@@ -76,7 +86,7 @@ class RolesController extends Controller
     {
         $role_permissions_ids = $role->getAllPermissions()->pluck('id')->toArray();
         $controller_permissions = Permission::all()->groupBy('controller');
-        return view('Admin.roles.edit',compact('role','controller_permissions','role_permissions_ids'));
+        return view('Admin.roles.edit', compact('role', 'controller_permissions', 'role_permissions_ids'));
     }
 
     /**
@@ -88,11 +98,16 @@ class RolesController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        try{
-            $role->update(['name'=>$request->name]);
-            $role->syncPermissions($request->permission_id);
+        try {
+            $role->update(['name' => $request->name]);
+            if ($request->has('permission_id')) {
+                $role->syncPermissions($request->permission_id);
+            }else{
+                $role->syncPermissions([]);
+
+            }
             return redirect()->route('roles.index')->with('success', 'تمت العملية بنجاح');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->route('roles.index')->with('error', 'فشلت العملية');
         }
     }

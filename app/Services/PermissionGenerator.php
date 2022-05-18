@@ -25,7 +25,6 @@ class PermissionGenerator {
         }
         return $this;
     }
-
     public function exceptNamespaces(array $namespaces)
     {
         foreach ( $this->perimssions AS $fullNamespace => $methods){
@@ -33,6 +32,18 @@ class PermissionGenerator {
             foreach( $namespaces AS $namespace){
                 if(str_starts_with($fullNamespace,$namespace)){
                     unset($this->perimssions[$fullNamespace]);
+                }
+            }
+        }
+        return $this;
+    }
+
+    public function exceptMethods(array $removedMethods)
+    {
+        foreach ( $this->perimssions AS $fullNamespace => $methods){
+            foreach( $methods AS $index=> $method){ // index
+                if(in_array($method,$removedMethods)){
+                    unset($this->perimssions[$fullNamespace][$index]);
                 }
             }
         }

@@ -7,9 +7,12 @@
     <div class="col-12">
         <h1 class="h1 text-center text-dark"> العلامات التجارية </h1>
     </div>
-    <div class="col-12">
-        <a href="{{ route('brands.create') }}" class="btn btn-primary rounded btn-sm"> أنشاء علامة تجارية </a>
-    </div>
+    @if (can('Store Brands','admin'))
+        <div class="col-12">
+            <a href="{{ route('brands.create') }}" class="btn btn-primary rounded btn-sm"> أنشاء علامة تجارية </a>
+        </div>
+    @endif
+
     <div class="col-12">
         <div class="table-responsive mt-15">
             <table class="table center-aligned-table mb-0">
@@ -34,12 +37,17 @@
                             </td>
                             <td>{{ $brand->created_at }}</td>
                             <td>{{ $brand->updated_at }}</td>
-                            <td><a href="{{route('brands.edit',$brand->id)}}" class="btn btn-outline-primary btn-sm">تعديل</a>
-                                <form action="{{route('brands.destroy',$brand->id)}}" method="post" class="d-inline">
-                                    @csrf
-                                    @method("DELETE")
-                                    <button class="btn btn-outline-danger btn-sm">حذف</button>
-                                </form>
+                            <td>
+                                @if (can('Update Brands','admin'))
+                                     <a href="{{route('brands.edit',$brand->id)}}" class="btn btn-outline-primary btn-sm">تعديل</a>
+                                @endif
+                                @if (can('Destroy Brands','admin'))
+                                    <form action="{{route('brands.destroy',$brand->id)}}" method="post" class="d-inline">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button class="btn btn-outline-danger btn-sm">حذف</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @empty

@@ -8,7 +8,9 @@
         <h1 class="h1 text-center text-dark"> @yield('title') </h1>
     </div>
     <div class="col-12">
-        <a href="{{ route('admins.create') }}" class="btn btn-primary rounded btn-sm"> إنشاء مُشرف </a>
+        @if (can('Store Admins','admin'))
+            <a href="{{ route('admins.create') }}" class="btn btn-primary rounded btn-sm"> إنشاء مُشرف </a>
+        @endif
     </div>
     <div class="col-12">
         <div class="table-responsive mt-15">
@@ -31,19 +33,23 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $admin->name }}</td>
                             <td>{{ $admin->email }}</td>
-                            <td>{{$admin->getRoleNames()->toArray()[0]}}</td> {{-- lazy loading --}}
+                            <td>{{$admin->getRoleNames()->toArray()[0]}}</td>   {{-- lazy loading --}}
+
                             <td>{{ $admin->email_verified_at ? "مُفعل":"غير مُفعل" }}</td>
                             <td>{{ $admin->created_at }}</td>
                             <td>{{ $admin->updated_at }}</td>
                             <td>
-                                {{-- @if($admin->getRoleNames()->toArray()[0] != 'Super Admin') --}}
-                                    <a href="{{route('admins.edit',['admin' => $admin->id])}}" class="btn btn-outline-primary btn-sm">تعديل</a>
-                                    <form action="{{route('admins.destroy',['admin' => $admin->id])}}" method="post" class="d-inline">
-                                        @csrf
-                                        @method("DELETE")
-                                        <button class="btn btn-outline-danger btn-sm">حذف</button>
-                                    </form>
-                                {{-- @endif --}}
+                                @if (can('Update Admins','admin'))
+                                <a href="{{route('admins.edit',['admin' => $admin->id])}}" class="btn btn-outline-primary btn-sm">تعديل</a>
+                                @endif
+                                @if (can('Destroy Admins','admin'))
+                                <form action="{{route('admins.destroy',['admin' => $admin->id])}}" method="post" class="d-inline">
+                                    @csrf
+                                    @method("DELETE")
+                                    <button class="btn btn-outline-danger btn-sm">حذف</button>
+                                </form>
+                                @endif
+
                             </td>
                         </tr>
                     @empty

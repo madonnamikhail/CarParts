@@ -7,9 +7,12 @@
 <div class="col-12">
     <h1 class="h1 text-center text-dark"> المدن </h1>
 </div>
-<div class="col-12">
-    <a href="{{ route('cities.create') }}" class="btn btn-primary rounded btn-sm"> أنشاء علامة تجارية </a>
-</div>
+    @if (can('Store Cities','admin'))
+        <div class="col-12">
+            <a href="{{ route('cities.create') }}" class="btn btn-primary rounded btn-sm"> أنشاء علامة تجارية </a>
+        </div>
+    @endif
+
 <div class="col-12">
     <div class="table-responsive mt-15">
         <table class="table center-aligned-table mb-0">
@@ -35,12 +38,18 @@
                         </td>
                         <td>{{ $city->created_at }}</td>
                         <td>{{ $city->updated_at }}</td>
-                        <td><a href="{{route('cities.edit',$city->id)}}" class="btn btn-outline-primary btn-sm">تعديل</a>
-                            <form action="{{route('cities.destroy',$city->id)}}" method="post" class="d-inline">
-                                @csrf
-                                @method("DELETE")
-                                <button class="btn btn-outline-danger btn-sm">حذف</button>
-                            </form>
+                        <td>
+                            @if (can('Update Cities','admin'))
+                                <a href="{{route('cities.edit',$city->id)}}" class="btn btn-outline-primary btn-sm">تعديل</a>
+                            @endif
+                            @if (can('Destroy Cities','admin'))
+                                <form action="{{route('cities.destroy',$city->id)}}" method="post" class="d-inline">
+                                    @csrf
+                                    @method("DELETE")
+                                    <button class="btn btn-outline-danger btn-sm">حذف</button>
+                                </form>
+                            @endif
+
                         </td>
                     </tr>
                 @empty

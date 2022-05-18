@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 function redirectAccordingToRequest($request,string $responseStatus) {
     if($responseStatus == 'success'){
@@ -15,4 +16,8 @@ function redirectAccordingToRequest($request,string $responseStatus) {
     }else{
         return redirect()->back()->with($responseStatus,$message);
     }
+}
+
+function can(string $permission ,?string $guard = null) :bool {
+    return Auth::guard($guard)->user()->can($permission);
 }
