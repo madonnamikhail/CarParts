@@ -193,11 +193,15 @@ return [
         'height'=>'الطول',
         'name.en'=>'الاسم باللغة الانجليزية',
         'name.ar'=>'الاسم بالالغة العربية',
-        'permission_id'=>'الصلاحيات'
+        'permission_id'=>'الصلاحيات',
+        'national_id'=>'رقم البطاقة'
     ],
     'values'=>[
         'resize'=>[
             'exist'=>'موجود',
+        ],
+        'social_links'=>[
+            'url'=>'رابط التواصل'
         ]
     ],
 ];

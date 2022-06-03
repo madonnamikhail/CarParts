@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Region;
 use App\Traits\EscapeUniCodeJson;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\HasTranslatableSlug;
@@ -15,6 +16,9 @@ class City extends Model
     public $fillable = ['name','status'];
     public $translatable = ['name'];
 
-
+    public function regions()
+    {
+        return $this->hasMany(Region::class);
+    }
 
 }

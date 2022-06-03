@@ -4,12 +4,16 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\PermissionGenerator;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RolesController;
+use App\Http\Controllers\Admin\ShopsController;
 use App\Http\Controllers\Admin\AdminsController;
 use App\Http\Controllers\Admin\BrandsController;
 use App\Http\Controllers\Admin\CitiesController;
 use App\Http\Controllers\Admin\ModelsController;
 use App\Http\Controllers\Admin\RegionsController;
+use App\Http\Controllers\Admin\SellersController;
+use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\Auth\ProfileController;
 use App\Http\Controllers\Admin\Auth\SettingsController;
 
@@ -30,12 +34,24 @@ Route::middleware('verified:admin')->group(function(){ //auth:admin
     });
     Route::resource('admins' , AdminsController::class)->except('show');
     Route::resource('roles' , RolesController::class)->except('show');
-    Route::get('profile',[ProfileController::class , 'index'])->name('profile');
-    Route::put('profile',[ProfileController::class , 'update'])->name('profile.update');
-    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('profile/password/reset',[ProfileController::class,'passwordReset'])->name('profile.reset.password');
-    Route::put('profile/password/reset',[ProfileController::class,'passwordUpdate'])->name('profile.update.password');
     Route::get('theme/{theme}',[SettingsController::class,'theme'])->name('theme');
+
+    Route::resource('categories',CategoriesController::class)->except('show');
+    Route::resource('products',ProductsController::class)->except('show');
+    Route::resource('sellers',SellersController::class)->except('show');
+    Route::resource('shops',ShopsController::class)->except('show');
+
+
+
+
+
+    Route::prefix('profile')->name('profile')->controller(ProfileController::class)->group(function(){
+        Route::get('/','index');
+        Route::put('/','update')->name('.update');
+        Route::get('/password/reset','passwordReset')->name('.reset.password');
+        Route::put('/password/reset','passwordUpdate')->name('.update.password');
+    });
+
 
 });
 

@@ -23,8 +23,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->tinyInteger('status')->default(1)->comment("1=>active ,0=> not active ");
             $table->enum('gender',['f','m']);
-            // $table->string('image')->default("seller.jpg");
-            $table->string('socialLinks')->nullable();
+            $table->string('social_links')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -39,4 +39,9 @@ Breadcrumbs::resource('cities','المدن');
 Breadcrumbs::resource('regions','المناطق');
 Breadcrumbs::resource('admins','المشرفيين');
 Breadcrumbs::resource('roles','الوظائف');
+Breadcrumbs::resource('categories','الاقسام');
+Breadcrumbs::resource('shops','المحلات');
+Breadcrumbs::resource('sellers','التجار');
+
+
 

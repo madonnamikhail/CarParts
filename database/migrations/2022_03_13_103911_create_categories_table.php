@@ -15,16 +15,16 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name',32);
-            // $table->string('logo',255)->nullable();
+            $table->json('name');
+            $table->string('slug', 255);
             $table->tinyInteger('status')->default(1)->comment("1=>active ,0=> not active ");
-            // $table->foreignId('category_id')->constrained();
+            $table->nestedSet();
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
+     * Reverse the migrations. 
      *
      * @return void
      */

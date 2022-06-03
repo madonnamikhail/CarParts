@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
+            $table->string('name',255);
             $table->string('street',255);
             $table->string('building',255);
             $table->string('floor',255);
-            $table->string('name',255);
-            $table->text('note')->nullable();
-            $table->foreignId('seller_id')->constrained();
+            $table->text('notes')->nullable();
+            $table->string('latitude',20);
+            $table->string('longitude',20);
+            $table->foreignId('seller_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('region_id')->constrained();
             $table->timestamps();
         });

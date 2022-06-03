@@ -21,5 +21,12 @@ class Region extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
-
+    public function shops()
+    {
+        return $this->hasMany(Shop::class);
+    }
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
 }
