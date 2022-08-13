@@ -20,17 +20,11 @@
         href="https://fonts.googleapis.com/css?family=Poppins:200,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900">
 
     <!-- css -->
-    {{-- light mode --}}
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/css/style-light.css') }}" /> --}}
     @php
         $mode = Cookie::get(Auth::guard('admin')->id()) ?? 'light';
         $cssFile = "style-{$mode}.css";
     @endphp
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/admin/css/$cssFile") }}" />
-    <!-- Scripts -->
-    {{-- <script src="{{ asset('assets/admin/js/app.js') }}" defer></script>
-     <!-- Styles -->
-    <link href="{{ asset('assets/admin/css/app.css') }}" rel="stylesheet"> --}}
     @stack('css')
 </head>
 
@@ -90,8 +84,8 @@
                     @endif
                 </li>
                 <li class="nav-item dropdown ">
-                    <a class="nav-link top-nav" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                        aria-expanded="false">
+                    <a class="nav-link top-nav" data-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="true" aria-expanded="false">
                         <i class="ti-bell"></i>
                         <span class="badge badge-danger notification-status"> </span>
                     </a>
@@ -107,15 +101,16 @@
                                 class="float-right text-muted time">22 mins</small> </a>
                         <a href="#" class="dropdown-item">Server error report<small
                                 class="float-right text-muted time">7 hrs</small> </a>
-                        <a href="#" class="dropdown-item">Database report<small class="float-right text-muted time">1
+                        <a href="#" class="dropdown-item">Database report<small
+                                class="float-right text-muted time">1
                                 days</small> </a>
                         <a href="#" class="dropdown-item">Order confirmation<small
                                 class="float-right text-muted time">2 days</small> </a>
                     </div>
                 </li>
                 <li class="nav-item dropdown ">
-                    <a class="nav-link top-nav" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                        aria-expanded="true"> <i class=" ti-view-grid"></i> </a>
+                    <a class="nav-link top-nav" data-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="true" aria-expanded="true"> <i class=" ti-view-grid"></i> </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-big">
                         <div class="dropdown-header">
                             <strong>Quick Links</strong>
@@ -157,12 +152,13 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('profile') }}"><i
                                 class="text-warning ti-user"></i>الصفحة الشخصية</a>
-                        <a class="dropdown-item" href="#"><i class="text-info ti-settings"></i>الاعدادات</a>
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                            <i class="text-danger ti-unlock"></i>تسجيل الجروج
+                        <a class="dropdown-item" href="#"><i class="text-info ti-settings"></i>اعدادات
+                            الموقع</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                            <i class="text-danger ti-unlock"></i> تسجيل خروج
                         </a>
-
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
@@ -182,95 +178,32 @@
                             <!-- menu item Dashboard-->
                             <li class="@if (Route::is('dashboard')) active @endif">
                                 <a href="{{ route('dashboard') }}">
-                                    <div class="pull-left"><i class="ti-home"></i><span
-                                            class="right-nav-text"> الصفحة الرئيسية </span>
+                                    <div class="pull-left"><i class="ti-home"></i><span class="right-nav-text">
+                                            الصفحة الرئيسية </span>
                                     </div>
 
                                     <div class="clearfix"></div>
                                 </a>
-
                             </li>
                             <!-- menu title -->
                             <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">المنتجات </li>
                             <!-- menu item Elements-->
-                            @if (can('Index Products', 'admin') || can('Index Categories', 'admin'))
-                                <li>
-                                    <a href="javascript:void(0);" data-toggle="collapse"
-                                        data-target="#categories-products"
-                                        @if (Request::is('admin/categories*') || Request::is('admin/products*')) class="" aria-expanded="true" @endif>
-                                        <div class="pull-left"><i class="ti-palette"></i><span
-                                                class="right-nav-text"> الاقسام و المنتجات</span></div>
-                                        <div class="pull-right"><i class="ti-plus"></i></div>
+                            @if (can('Index Users', 'admin'))
+                                <li class="@if (Request::is('admin/users*')) active @endif">
+                                    <a href="{{ route('users.index') }}">
+                                        <div class="pull-left"><i class="ti-user"></i><span class="right-nav-text">
+                                                المستخدمين </span>
+                                        </div>
                                         <div class="clearfix"></div>
                                     </a>
-                                    <ul id="categories-products"
-                                        class="collapse @if (Request::is('admin/products*') || Request::is('admin/categories*')) show @endif"
-                                        data-parent="#sidebarnav">
-                                        @if (can('Index Categories', 'admin'))
-                                            <li class="@if (Request::is('admin/categories*')) active @endif"><a
-                                                    href="{{ route('categories.index') }}">الاقسام</a></li>
-                                        @endif
-                                        @if (can('Index Products', 'admin'))
-                                            <li class="@if (Request::is('admin/products*')) active @endif"><a
-                                                    href="{{ route('products.index') }}">المنتجات</a></li>
-                                        @endif
-                                    </ul>
+
                                 </li>
                             @endif
-
-                            {{-- @if (can('Index Sellers', 'admin') || can('Index Shops', 'admin')) --}}
-                                <li>
-                                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#sellers-shops"
-                                        @if (Request::is('admin/sellers*') || Request::is('admin/shops*')) class="" aria-expanded="true" @endif>
-                                        <div class="pull-left"><i class="ti-palette"></i><span
-                                                class="right-nav-text">المحلات و التجار </span></div>
-                                        <div class="pull-right"><i class="ti-plus"></i></div>
-                                        <div class="clearfix"></div>
-                                    </a>
-                                    <ul id="sellers-shops"
-                                        class="collapse @if (Request::is('admin/sellers*') || Request::is('admin/shops*')) show @endif"
-                                        data-parent="#sidebarnav">
-                                        {{-- @if (can('Index Shops', 'admin')) --}}
-                                            <li class="@if (Request::is('admin/shops*')) active @endif"><a
-                                                    href="{{ route('shops.index') }}">المحلات</a></li>
-                                        {{-- @endif --}}
-                                        {{-- @if (can('Index Sellers', 'admin')) --}}
-                                            <li class="@if (Request::is('admin/sellers*')) active @endif"><a
-                                                    href="{{ route('sellers.index') }}">التجار</a></li>
-                                        {{-- @endif --}}
-                                    </ul>
-                                </li>
-                            {{-- @endif --}}
-
-
-
-                            @if (can('Index Brands', 'admin') || can('Index Models', 'admin'))
-                                <li>
-                                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#brands-models"
-                                        @if (Request::is('admin/brands*') || Request::is('admin/models*')) class="" aria-expanded="true" @endif>
-                                        <div class="pull-left"><i class="ti-palette"></i><span
-                                                class="right-nav-text">العلامات التجارية والموديلات</span></div>
-                                        <div class="pull-right"><i class="ti-plus"></i></div>
-                                        <div class="clearfix"></div>
-                                    </a>
-                                    <ul id="brands-models"
-                                        class="collapse @if (Request::is('admin/brands*') || Request::is('admin/models*')) show @endif"
-                                        data-parent="#sidebarnav">
-                                        @if (can('Index Brands', 'admin'))
-                                            <li class="@if (Request::is('admin/brands*')) active @endif"><a
-                                                    href="{{ route('brands.index') }}">العلامات التجارية</a></li>
-                                        @endif
-                                        @if (can('Index Models', 'admin'))
-                                            <li class="@if (Request::is('admin/models*')) active @endif"><a
-                                                    href="{{ route('models.index') }}">الموديلات</a></li>
-                                        @endif
-                                    </ul>
-                                </li>
-                            @endif
-
+                            <!-- menu item Elements-->
                             @if (can('Index Cities', 'admin') || can('Index Regions', 'admin'))
                                 <li>
-                                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#cities-regions"
+                                    <a href="javascript:void(0);" data-toggle="collapse"
+                                        data-target="#cities-regions"
                                         @if (Request::is('admin/cities*') || Request::is('admin/regions*')) class="" aria-expanded="true" @endif>
                                         <div class="pull-left"><i class="ti-palette"></i><span
                                                 class="right-nav-text">المدن والمناطق</span></div>
@@ -291,8 +224,122 @@
                                     </ul>
                                 </li>
                             @endif
+                            <!-- menu item Elements-->
+                            @if (can('Index Orders', 'admin'))
+                                <li class="@if (Request::is('admin/orders*')) active @endif">
+                                    <a href="{{ route('orders.index') }}">
+                                        <div class="pull-left"><i class="ti-plus"></i><span class="right-nav-text">
+                                                الطلبات </span>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </a>
 
-                            @if (can('Index Admins', 'admin') || can('Index Roles', 'admin'))
+                                </li>
+                            @endif
+                            @if (can('Index Products', 'admin') || can('Index Categories', 'admin') || can('Index Specs', 'admin'))
+                                <li>
+                                    <a href="javascript:void(0);" data-toggle="collapse"
+                                        data-target="#categories-products"
+                                        @if (Request::is('admin/categories*') || Request::is('admin/products*') || Request::is('admin/specs*')) class="" aria-expanded="true" @endif>
+                                        <div class="pull-left"><i class="ti-palette"></i><span
+                                                class="right-nav-text">الأقسام والمنتجات </span></div>
+                                        <div class="pull-right"><i class="ti-plus"></i></div>
+                                        <div class="clearfix"></div>
+                                    </a>
+                                    <ul id="categories-products"
+                                        class="collapse @if (Request::is('admin/products*') || Request::is('admin/categories*') || Request::is('admin/specs*')) show @endif"
+                                        data-parent="#sidebarnav">
+                                        @if (can('Index Categories', 'admin'))
+                                            <li class="@if (Request::is('admin/categories*')) active @endif"><a
+                                                    href="{{ route('categories.index') }}">الأقسام</a></li>
+                                        @endif
+                                        @if (can('Index Products', 'admin'))
+                                            <li class="@if (Request::is('admin/products*')) active @endif"><a
+                                                    href="{{ route('products.index') }}">المنتجات</a></li>
+                                        @endif
+                                        @if (can('Index Specs', 'admin'))
+                                            <li class="@if (Request::is('admin/specs*')) active @endif"><a
+                                                    href="{{ route('specs.index') }}">مُواصفات المنتجات</a></li>
+                                        @endif
+                                    </ul>
+                                </li>
+                            @endif
+                            @if (can('Index Offers', 'admin') || can('Index Coupons', 'admin'))
+                                <li>
+                                    <a href="javascript:void(0);" data-toggle="collapse"
+                                        data-target="#Offers-Coupons"
+                                        @if (Request::is('admin/offers*') || Request::is('admin/coupons*')) class="" aria-expanded="true" @endif>
+                                        <div class="pull-left"><i class="ti-palette"></i><span
+                                                class="right-nav-text">العروض وأكواد الخصم </span></div>
+                                        <div class="pull-right"><i class="ti-plus"></i></div>
+                                        <div class="clearfix"></div>
+                                    </a>
+                                    <ul id="Offers-Coupons"
+                                        class="collapse @if (Request::is('admin/offers*') || Request::is('admin/coupons*')) show @endif"
+                                        data-parent="#sidebarnav">
+                                        @if (can('Index Offers', 'admin'))
+                                            <li class="@if (Request::is('admin/offers*')) active @endif"><a
+                                                    href="{{ route('offers.index') }}">العروض</a></li>
+                                        @endif
+                                        @if (can('Index Sellers', 'admin'))
+                                            <li class="@if (Request::is('admin/coupons*')) active @endif"><a
+                                                    href="{{ route('coupons.index') }}"> أكواد الخصم</a></li>
+                                        @endif
+
+                                    </ul>
+                                </li>
+                            @endif
+                            @if (can('Index Sellers', 'admin') || can('Index Shops', 'admin'))
+                                <li>
+                                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#Shops-Sellers"
+                                        @if (Request::is('admin/sellers*') || Request::is('admin/shops*')) class="" aria-expanded="true" @endif>
+                                        <div class="pull-left"><i class="ti-palette"></i><span
+                                                class="right-nav-text">المحلات والتجار </span></div>
+                                        <div class="pull-right"><i class="ti-plus"></i></div>
+                                        <div class="clearfix"></div>
+                                    </a>
+                                    <ul id="Shops-Sellers"
+                                        class="collapse @if (Request::is('admin/sellers*') || Request::is('admin/shops*')) show @endif"
+                                        data-parent="#sidebarnav">
+                                        @if (can('Index Shops', 'admin'))
+                                            <li class="@if (Request::is('admin/shops*')) active @endif"><a
+                                                    href="{{ route('shops.index') }}">المحلات</a></li>
+                                        @endif
+                                        @if (can('Index Sellers', 'admin'))
+                                            <li class="@if (Request::is('admin/sellers*')) active @endif"><a
+                                                    href="{{ route('sellers.index') }}">التجار</a></li>
+                                        @endif
+
+                                    </ul>
+                                </li>
+                            @endif
+                            @if (can('Index Brands', 'admin') || can('Index Models', 'admin'))
+                                <li>
+                                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#brands-models"
+                                        @if (Request::is('admin/brands*') || Request::is('admin/models*')) class="" aria-expanded="true" @endif>
+                                        <div class="pull-left"><i class="ti-palette"></i><span
+                                                class="right-nav-text">العلامات التجارية والموديلات</span></div>
+                                        <div class="pull-right"><i class="ti-plus"></i></div>
+                                        <div class="clearfix"></div>
+                                    </a>
+                                    <ul id="brands-models"
+                                        class="collapse @if (Request::is('admin/brands*') || Request::is('admin/models*')) show @endif"
+                                        data-parent="#sidebarnav">
+                                        @if (can('Index Brands', 'admin'))
+                                            <li class="@if (Request::is('admin/brands*')) active @endif"><a
+                                                    href="{{ route('brands.index') }}">العلامات التجارية</a></li>
+                                        @endif
+                                        @if (can('Index Models', 'admin'))
+                                            <li class="@if (Request::is('admin/models*')) active @endif"><a
+                                                    href="{{ route('models.index') }}">الموديلات</a></li>
+                                        @endif
+
+                                    </ul>
+                                </li>
+                            @endif
+
+
+                            @if (can('Index Roles', 'admin') || can('Index Admins', 'admin'))
                                 <li>
                                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#admins-roles"
                                         @if (Request::is('admin/admins*') || Request::is('admin/roles*')) class="" aria-expanded="true" @endif>
@@ -308,27 +355,24 @@
                                             <li class="@if (Request::is('admin/admins*')) active @endif"><a
                                                     href="{{ route('admins.index') }}">المُشرفين</a></li>
                                         @endif
-
                                         @if (can('Index Roles', 'admin'))
                                             <li class="@if (Request::is('admin/roles*')) active @endif"><a
-                                                    href="{{ route('roles.index') }}">والوظائف</a></li>
+                                                    href="{{ route('roles.index') }}">الوظائف</a></li>
                                         @endif
                                     </ul>
                                 </li>
                             @endif
 
-
                         </ul>
                     </div>
                 </div>
-
-
                 <div class="content-wrapper">
                     <div class="page-title">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <h4>@yield('breadcrumb')</h4>
                             </div>
+
                         </div>
                     </div>
                     <div class="row">
@@ -337,7 +381,7 @@
                                 <div class="alert alert-success text-center">
                                     {{ session('success') }}
                                 </div>
-                            @elseif (session('error'))
+                            @elseif(session('error'))
                                 <div class="alert alert-danger text-center">
                                     {{ session('error') }}
                                 </div>

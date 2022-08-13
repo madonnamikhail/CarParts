@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name',32);
             $table->string('email',32)->unique();
             // $table->string('phone',11)->unique();
+            $table->tinyInteger('status')->default(1)->comment("1=>active ,0=>not active ");
+
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

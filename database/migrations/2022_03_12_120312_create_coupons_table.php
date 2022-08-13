@@ -21,10 +21,14 @@ return new class extends Migration
             $table->smallInteger('mini_order_price')->nullable();
             $table->smallInteger('max_discount_value')->nullable();
             $table->smallInteger('max_number_of_usage')->nullable();
+            $table->smallInteger('max_usage_count')->nullable();
             $table->smallInteger('max_usage_count_per_user')->nullable();
-            $table->tinyInteger('website_per')->default('100');
+                     $table->tinyInteger('website_percentage')->default('100');
+            $table->tinyInteger('status')->default(1)->comment("1=>active ,0=>not active ");
+
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
+
             // $table->integer('discount');
             $table->timestamps();
         });

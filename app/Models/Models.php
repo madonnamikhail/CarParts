@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Product;
 use App\Traits\EscapeUniCodeJson;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
@@ -26,4 +27,15 @@ class Models extends Model implements HasMedia
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
 }

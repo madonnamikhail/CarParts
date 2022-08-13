@@ -79,7 +79,5 @@ class VerificationController extends Controller
                 Permission::create(['name'=>ucwords("{$permission} {$controller}"),'guard_name'=>'admin','controller'=>$controller]);
             }
         }
-
-
     }
 }

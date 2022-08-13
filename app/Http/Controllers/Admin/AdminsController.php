@@ -13,12 +13,13 @@ use App\Http\Requests\admin\Admins\UpdateAdminRequest;
 
 class AdminsController extends Controller
 {
-    public function __construct() {
-        $this->middleware('superadmin.prevent.update')->only('edit','update','destroy');
+    public function __construct()
+    {
+        $this->middleware('superadmin.prevent.update')->only('edit', 'update', 'destroy');
         $this->middleware('permission:Index Admins,admin')->only('index');
-        $this->middleware('permission:Store Admins,admin')->only('create','store');
-        $this->middleware('permission:Update Admins,admin')->only('edit','update');
-        $this->middleware('permission:Destroy Admins,admin')->only('edit','destroy');
+        $this->middleware('permission:Store Admins,admin')->only('create', 'store');
+        $this->middleware('permission:Update Admins,admin')->only('edit', 'update');
+        $this->middleware('permission:Destroy Admins,admin')->only('edit', 'destroy');
     }
     public const AVAILABLE_STATUS = ['مفعل' => 1, 'غير مفعل' => 0];
     public const AVAILABLE_EXTENSIONS = ['png', 'jpg', 'jpeg'];
@@ -29,8 +30,8 @@ class AdminsController extends Controller
      */
     public function index()
     {
-        $admins=Admin::whereNot('id',1)->get(); // except super admin
-        return view('Admin.admins.index',compact('admins'));
+        $admins = Admin::whereNot('id', 1)->get(); // except super admin
+        return view('Admin.admins.index', compact('admins'));
     }
 
     /**
@@ -41,7 +42,7 @@ class AdminsController extends Controller
     public function create()
     {
         $roles = Role::whereNotIn('name', ['Super Admin'])->get();
-        return view('Admin.admins.create',['statuses'=>self::AVAILABLE_STATUS,'roles'=>$roles]);
+        return view('Admin.admins.create', ['statuses' => self::AVAILABLE_STATUS, 'roles' => $roles]);
     }
 
     /**
@@ -53,24 +54,25 @@ class AdminsController extends Controller
     public function store(StoreAdminRequest $request)
     {
         $data = [
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'password'=>Hash::make($request->password),
-            'email_verified_at' => $request->status ? date('Y-m-d H:i:s') : NULL,
+            'name' => $request->name,
+            'email' => $request->email,
+            'status' => $request->status,
+            'password' => Hash::make($request->password),
+            'email_verified_at' => $request->email_verified_at ? date('Y-m-d H:i:s') : NULL,
         ];
         DB::beginTransaction();
-        try{
+        try {
             $admin = Admin::create($data);
             $admin->syncRoles($request->role_id);
-            if($request->hasFile('image')){
+            if ($request->hasFile('image')) {
                 $admin->addMediaFromRequest('image')->toMediaCollection('admins'); // store new image
             }
             DB::commit();
-            return $this->redirectAccordingToRequest($request,'success');
-        }catch(\Exception $e){
+            return $this->redirectAccordingToRequest($request, 'success');
+        } catch (\Exception $e) {
             // dd($e->getMessage());
             DB::rollBack();
-            return $this->redirectAccordingToRequest($request,'error');
+            return $this->redirectAccordingToRequest($request, 'error');
         }
     }
 
@@ -82,7 +84,6 @@ class AdminsController extends Controller
      */
     public function show($id)
     {
-
     }
 
     /**
@@ -94,7 +95,7 @@ class AdminsController extends Controller
     public function edit(Admin $admin)
     {
         $roles = Role::all();
-        return view('Admin.admins.edit',['statuses'=>self::AVAILABLE_STATUS,'roles'=>$roles,'admin'=>$admin]);
+        return view('Admin.admins.edit', ['statuses' => self::AVAILABLE_STATUS, 'roles' => $roles, 'admin' => $admin]);
     }
 
     /**
@@ -107,24 +108,24 @@ class AdminsController extends Controller
     public function update(UpdateAdminRequest $request, Admin $admin)
     {
         $data = [
-            'name'=>$request->name,
-            'email'=>$request->email,
+            'name' => $request->name,
+            'email' => $request->email,
             'email_verified_at' => $request->status ? date('Y-m-d H:i:s') : NULL,
         ];
         $request->has('password') ? $data['password'] = Hash::make($request->password) : "";
         DB::beginTransaction();
-        try{
+        try {
             $admin->update($data);
             $admin->syncRoles($request->role_id);
-            if($request->hasFile('image')){
-                if(isset($admin->getMedia('admins')[0])){
+            if ($request->hasFile('image')) {
+                if (isset($admin->getMedia('admins')[0])) {
                     $admin->getMedia('admins')[0]->delete(); // remove old image
                 }
                 $admin->addMediaFromRequest('image')->toMediaCollection('admins'); // store new image
             }
             DB::commit();
             return redirect()->route('admins.index')->with('success', 'تمت العملية بنجاح');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('admins.index')->with('success', 'فشلت العملية');
         }
@@ -141,4 +142,5 @@ class AdminsController extends Controller
         $admin->delete();
         return redirect()->route('admins.index')->with('success', 'تمت العملية بنجاح');
     }
+
 }

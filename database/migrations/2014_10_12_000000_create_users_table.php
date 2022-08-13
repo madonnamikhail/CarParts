@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('gender',['f','m']);
             // $table->string('image')->default("user.jpg");
-            $table->tinyInteger('status')->default(1)->comment("1=>active(defauly) , 0 =>blocked");
+            $table->tinyInteger('status')->default(1)->comment("1=>active(defauly) , 0 =>fake , 2=>blocked ");
             $table->rememberToken();
             $table->timestamps();
         });

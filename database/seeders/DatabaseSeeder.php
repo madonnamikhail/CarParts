@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Region;
 use Illuminate\Database\Seeder;
 use Database\Seeders\BrandSeeder;
 use Database\Seeders\MediaSeeder;
@@ -23,6 +24,8 @@ class DatabaseSeeder extends Seeder
         BrandSeeder::class,
         ModelsSeeder::class,
         MediaSeeder::class,
+        CitySeeder::class,
+        RegionSeeder::class,
     ]);
     }
 }

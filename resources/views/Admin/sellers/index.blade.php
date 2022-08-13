@@ -7,11 +7,11 @@
     <div class="col-12">
         <h1 class="h1 text-center text-dark"> @yield('title') </h1>
     </div>
-    {{-- @if (can('Store Sellers', 'admin')) --}}
+    @if (can('Store Sellers', 'admin'))
     <div class="col-12">
         <a href="{{ route('sellers.create') }}" class="btn btn-primary rounded btn-sm"> إنشاء تاجر </a>
     </div>
-    {{-- @endif --}}
+    @endif
     <div class="col-12">
         <div class="table-responsive mt-15">
             <table class="table center-aligned-table mb-0">
@@ -50,31 +50,30 @@
                             </td>
                             <td>
                                 @foreach (json_decode($seller->social_links) as $link)
-                                    {{-- <a>{{str_ireplace('.com','',str_ireplace('www.','', parse_url($link->social_link,PHP_URL_HOST)))}}</a> --}}
-                                    <a class="h6" href="{{$link->social_link}}" target="_blank"><i class=" fa fa-{{str_ireplace('.com','',str_ireplace('www.','', parse_url($link->social_link,PHP_URL_HOST)))}}"></i></a>
+                                    <a class="h6" href="{{$link->social_link}}"  target="_blank"><i title="{{$link->social_link}}" class=" fa fa-{{str_ireplace('.com','',str_ireplace('www.','', parse_url($link->social_link,PHP_URL_HOST)))}}  fa-exclamation-triangle"></i></a>
                                 @endforeach
                             </td>
                             <td>{{ $seller->created_at }}</td>
                             <td>{{ $seller->updated_at }}</td>
                             <td>
-                                {{-- @if (can('Update Sellers', 'admin')) --}}
+                                @if (can('Update Sellers', 'admin'))
                                 <a href="{{ route('sellers.edit', ['seller' => $seller->id]) }}"
                                     class="btn btn-outline-primary btn-sm">تعديل</a>
-                                {{-- @endif --}}
-                                {{-- @if (can('Destroy Sellers', 'admin')) --}}
+                                @endif
+                                @if (can('Destroy Sellers', 'admin'))
                                 <form action="{{ route('sellers.destroy', ['seller' => $seller->id]) }}" method="post"
                                     class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-outline-danger btn-sm">حذف</button>
                                 </form>
-                                {{-- @endif --}}
+                                @endif
 
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="alert alert-warning font-weight-bold text-center w-100">لايوجد تُجار
+                            <td colspan="10" class="alert alert-warning font-weight-bold text-center w-100">لايوجد تُجار
                                 حاليا</td>
                         </tr>
                     @endforelse

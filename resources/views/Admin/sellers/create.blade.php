@@ -24,11 +24,13 @@
                                     </button>
                                 </div>
                                 <div class="col-6">
-                                    <button class="btn btn-outline-primary form-control" type="button"
-                                        data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
-                                        aria-controls="collapseTwo" id="branches">
-                                        المحلات
-                                    </button>
+                                    {{-- @if (can('Store Shops', 'admin')) --}}
+                                        <button class="btn btn-outline-primary form-control" type="button"
+                                            data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                            aria-controls="collapseTwo" id="branches">
+                                            المحلات
+                                        </button>
+                                    {{-- @endif --}}
                                 </div>
                                 <div class="col-12 mt-4">
                                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
@@ -158,10 +160,9 @@
 
                                                             <div class="col-4   mb-3">
                                                                 <select name="region_id" class="form-control" id="">
-                                                                    <option selected disabled>اختر المنطقة </option>
                                                                     @foreach ($regions as $region)
                                                                         <option value="{{ $region->id }}">
-                                                                            {{ $region->getTranslation('name', 'en') . '-' . $region->getTranslation('name', 'ar') }}
+                                                                            {{ $region->getTranslation('name', 'en') . '-' . $region->getTranslation('name', 'en') }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -169,8 +170,8 @@
                                                             <div class="col-4  mb-3">
                                                                 <textarea name="notes" id="" cols="30" rows="1" class="form-control" placeholder="ملاحظات"></textarea>
                                                             </div>
-                                                            <input type="hidden" name="latitude" id="latitude">
-                                                            <input type="hidden" name="longitude" id="longitude">
+                                                            <input type="hidden" name="latitude" >
+                                                            <input type="hidden" name="longitude" >
                                                             <div class="col-lg-12">
 
                                                                 <input class="btn btn-danger btn-lg" data-repeater-delete
@@ -182,7 +183,14 @@
                                                 </div>
                                                 <input class="button btn-success btn-lg my-5" data-repeater-create
                                                     type="button" value="أضافة فرع" />
-                                                <div id="googleMap" name="map" style="width:100%;height:400px;" class="mb-4"></div>
+
+                                                <div id="googleMap" name="map" style="width:100%;height:400px;"
+                                                    class="mb-4"></div>
+                                                <div id="floating-panel">
+
+                                                    <input id="delete-markers" onclick="deleteMarkers()" class="btn btn-outline-danger" type="button"
+                                                        value="مسح كل الفروع في الخريطة" />
+                                                </div>
                                             </div>
 
                                         </div>
@@ -217,36 +225,34 @@
         });
     </script>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?language=en&key=AIzaSyBQ4f-1vpjKU8YiiDt6uXQUT-Msezq05HU&callback=myMap">
+        src="https://maps.googleapis.com/maps/api/js?language=en&key=AIzaSyA_ByXqRRoZX8gjgRlUCGJ4F5Ot0THdkLc&callback=myMap">
     </script>
 
     <script>
-        var markers = [];
+        let markers = [];
+        let removeMarkers = [];
         function myMap() {
-            //default points
             var mapProp = {
                 center: new google.maps.LatLng(30.120655, 31.352292),
                 zoom: 15,
             };
-            //map name
             var map = new google.maps.Map(
                 document.getElementById("googleMap"),
                 mapProp
             );
-            //take to values of long and lat and put them in markers array
             function placeMarker(location) {
                 marker = new google.maps.Marker({
                     position: location,
                     map: map,
                     title: "الفرع " + (markers.length + 1),
                 });
+                removeMarkers.push(marker);
                 var lat = location.lat();
                 var lng = location.lng();
                 markers.push({
                     lat: lat,
                     lng: lng
                 });
-                //pass the long and lat values to two inputs which has type hidden 
                 for (let index = 0; index < markers.length; index++) {
                     document.getElementsByName(
                         "shop[" + index + "][latitude]"
@@ -255,10 +261,42 @@
                         "shop[" + index + "][longitude]"
                     )[0].value = markers[index].lng;
                 }
+                // marker.addListener("dblclick", function() {
+                //     marker.setMap(null);
+                // });
             }
             google.maps.event.addListener(map, "click", function(event) {
                 placeMarker(event.latLng);
             });
         }
+        // Sets the map on all markers in the array.
+        function setMapOnAll(map) {
+            for (var i = 0; i < removeMarkers.length; i++) {
+                removeMarkers[i].setMap(map);
+            }
+        }
+        // Deletes all markers in the array by removing references to them.
+        function deleteMarkers() {
+            setMapOnAll(null);
+            for (let index = 0; index < markers.length; index++) {
+                document.getElementsByName(
+                    "shop[" + index + "][latitude]"
+                )[0].value = '';
+                document.getElementsByName(
+                    "shop[" + index + "][longitude]"
+                )[0].value = '';
+            }
+            removeMarkers = [];
+            markers = [];
+        }
+    </script>
+    <script>
+            $(document).ready(function() {
+                $('.repeater, .repeater-file, .repeater-add').repeater({
+                    show: function() {
+                        $(this).slideDown();
+                    }
+                });
+            });
     </script>
 @endpush

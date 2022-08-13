@@ -132,6 +132,10 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'g-recaptcha-response' => [
+            'required' => 'Please verify that you are not a robot.',
+            'captcha' => 'Captcha error! try again later or contact site admin.',
+        ],
     ],
 
     /*
@@ -194,7 +198,15 @@ return [
         'name.en'=>'الاسم باللغة الانجليزية',
         'name.ar'=>'الاسم بالالغة العربية',
         'permission_id'=>'الصلاحيات',
-        'national_id'=>'رقم البطاقة'
+        'national_id'=>'رقم البطاقة',
+        'social_links.*.social_link' => 'التواصل الاجتماعي :position',
+        'shop.*.name'=>'اسم المحل :position',
+        'shop.*.street'=>'اسم الشارع :position',
+        'shop.*.building'=>'اسم المبنى :position',
+        'shop.*.floor'=>' الطابق :position',
+        'shop.*.latitude'=>'خط الطول :position',
+        'shop.*.longitude'=>'خط العرض :position',
+        'g-recaptcha-response'=>'رمز التحقق'
     ],
     'values'=>[
         'resize'=>[

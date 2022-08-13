@@ -19,8 +19,8 @@ return new class extends Migration
             $table->text('description');
             $table->tinyInteger('max_discount');
             $table->tinyInteger('status')->default(1)->comment("1=>active ,0=> not active ");
-            $table->timestamp('start_date')->nullable();
-            $table->timestamp('end_date')->nullable();
+            $table->timestamp('start_at')->nullable();
+            $table->timestamp('end_at')->nullable();
             $table->timestamps();
         });
     }

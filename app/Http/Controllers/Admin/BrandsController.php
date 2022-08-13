@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Brand;
+use App\Models\Models;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\Brands\StoreBrandRequest;
 use App\Http\Requests\Admin\Brands\UpdateBrandRequest;
 
@@ -78,4 +79,24 @@ class BrandsController extends Controller
         return  redirect()->back()->with('success', 'تمت العملية بنجاح');
     }
 
+
+    public function models(Request $request)
+    {
+        $request->validate([
+            'brand_id'=>['required','integer','exists:brands,id'],
+            'category_id'=>['required','integer','exists:categories,id']
+        ]);
+        $models = Models::select('id','name')->where('brand_id',$request->brand_id)
+        ->whereIn('id',function($subquery) use($request){
+            $subquery->select('model_id')
+            ->distinct()
+            ->from('products')
+            ->where('category_id',$request->category_id);
+        })->get();
+        $options = "<option value=''></option>";
+         foreach($models AS $model){
+            $options.= "<option value='{$model->id}'>{$model->id}-{$model->getTranslation('name','ar')} - {$model->getTranslation('name','en')} - {$model->year} </option>";
+         }
+        return response()->json(compact('options','models'));
+    }
 }

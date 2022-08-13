@@ -65,4 +65,12 @@ class LoginController extends Controller
     {
         return view('admin.auth.login');
     }
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+            'g-recaptcha-response' => ['required','recaptcha'],
+        ]);
+    }
 }

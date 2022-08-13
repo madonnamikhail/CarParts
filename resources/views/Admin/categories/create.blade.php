@@ -31,7 +31,7 @@
                 <label for="category"> مُتفرع من قسم</label>
                 @php
                 echo "<select name='category_id' class='custom-select' id='category'>
-                    <option value=''> لايوجد <option>";
+                    <option value=''> لايوجد </option>";
                 $traverse = function ($categories, $prefix = '&nbsp') use (&$traverse) {
                     foreach ($categories as $category) {
                         $option =  "<option ";
@@ -54,4 +54,3 @@
         </form>
     </div>
 @endsection
- 
